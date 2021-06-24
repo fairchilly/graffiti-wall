@@ -95,6 +95,11 @@ class PostService
      */
     public function create(array $request)
     {
+        // Check for user authentication
+        if (auth()->user()) {
+            $request['user_id'] = auth()->user()->id;
+        }
+
         // Create the post
         $post = Post::create($request);
 

@@ -17,7 +17,6 @@ class PostResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
             'content' => stripHtmlAndShorten($this->content),
             'created_at' => $this->created_at,
             'user_id' => $this->user_id,

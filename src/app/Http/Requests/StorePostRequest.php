@@ -24,7 +24,6 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:posts|min:3|max:255',
             'content' => 'required|min:3|max:65535',
         ];
     }

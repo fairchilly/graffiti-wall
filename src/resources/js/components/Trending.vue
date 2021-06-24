@@ -10,7 +10,7 @@
             <ul class="menu-list" v-if="trendingTags.length > 0">
                 <li v-for="tag in trendingTags" :key="tag.id">
                     <a>
-                        <span class="tag">
+                        <span class="tag is-dark">
                             {{ tag.name }}
                         </span>
                     </a>

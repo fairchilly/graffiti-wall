@@ -8,6 +8,8 @@ require("./bootstrap");
 
 window.Vue = require("vue").default;
 
+Vue.use(require("vue-moment"));
+
 import router from "./router";
 
 /**
@@ -37,5 +39,5 @@ files.keys().map(key =>
 
 const app = new Vue({
     router,
-    el: "#app",
+    el: "#app"
 });

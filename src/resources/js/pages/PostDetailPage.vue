@@ -5,43 +5,62 @@
         </span>
 
         <span v-if="!loading">
-            <article class="media" v-if="post">
-                <div class="media-content">
+            <article class="card has-background-white">
+                <div class="card-content">
                     <div class="content">
-                        <p>
-                            <strong>John Smith</strong>
-                            <small>@johnsmith</small>
-                            <small>31m</small>
-                            <br />
-                            <span v-html="post.content">
-                                {{ post.content }}
-                            </span>
-                        </p>
-                    </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                            <a class="level-item">
-                                <span class="icon is-small"
-                                    ><i class="fas fa-reply"></i
-                                ></span>
-                            </a>
-                            <a class="level-item">
-                                <span class="icon is-small"
-                                    ><i class="fas fa-retweet"></i
-                                ></span>
-                            </a>
-                            <a class="level-item">
-                                <span class="icon is-small"
-                                    ><i class="fas fa-heart"></i
-                                ></span>
-                            </a>
+                        <div class="columns">
+                            <div
+                                class="column is-flex is-justify-content-space-between"
+                            >
+                                <div>
+                                    <strong>{{ post.user_name }}</strong>
+                                    <small class="has-text-grey">
+                                        @{{ post.user_username }}
+                                    </small>
+                                    <br />
+                                </div>
+                                <div>
+                                    <small>
+                                        {{
+                                            post.created_at
+                                                | moment("MMMM D, YYYY h:mm A")
+                                        }}
+                                    </small>
+                                </div>
+                            </div>
                         </div>
-                    </nav>
-                </div>
-                <div class="media-right">
-                    <button class="delete"></button>
+                        <div class="columns">
+                            <div class="column pt-0" v-html="post.content">
+                                {{ post.content }}
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column pt-0">
+                                <p v-if="post.tags.length > 0">
+                                    <a
+                                        v-for="tag in post.tags"
+                                        :key="post.id + tag.id"
+                                    >
+                                        <span class="tag is-dark mr-1">
+                                            {{ tag.value }}
+                                        </span>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </article>
+            <div class="columns">
+                <div class="column">
+                    <router-link
+                        :to="{ name: 'home' }"
+                        class="button is-link is-light mt-5"
+                    >
+                        Go Back
+                    </router-link>
+                </div>
+            </div>
         </span>
     </span>
 </template>

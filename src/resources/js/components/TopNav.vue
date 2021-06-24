@@ -27,10 +27,13 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-info">
+                        <router-link
+                            :to="{ name: 'create-post' }"
+                            class="button is-info"
+                        >
                             <strong>Post Now</strong>
-                        </a>
-                        <a class="button is-primary">
+                        </router-link>
+                        <a class="button is-link">
                             <strong>Sign Up</strong>
                         </a>
                         <a class="button is-light">

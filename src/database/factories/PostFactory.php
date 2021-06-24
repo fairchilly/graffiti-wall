@@ -47,7 +47,6 @@ class PostFactory extends Factory
 
         return [
             'user_id' => $is_anonymous ? null : $this->faker->numberBetween(1, 10),
-            'title' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'content' => $content,
             'created_at' => $date,
             'updated_at' => $date,

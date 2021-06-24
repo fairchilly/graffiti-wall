@@ -3,21 +3,29 @@
         <span v-if="loading">
             <div class="spinner"></div>
         </span>
-        <div class="columns is-multiline" v-if="posts.length > 0">
-            <div
-                class="column is-one-third"
-                v-for="post in posts"
-                :key="post.id"
-            >
-                <post-entry
-                    :postid="post.id"
-                    :name="post.user_name"
-                    :username="post.user_username"
-                    :tags="post.tags"
-                    :content="post.content"
-                ></post-entry>
+        <span v-if="posts.length > 0">
+            <div class="columns is-multiline">
+                <div
+                    class="column is-one-third"
+                    v-for="post in posts"
+                    :key="post.id"
+                >
+                    <post-entry
+                        :postid="post.id"
+                        :name="post.user_name"
+                        :username="post.user_username"
+                        :tags="post.tags"
+                        :content="post.content"
+                        :date="post.created_at"
+                    ></post-entry>
+                </div>
             </div>
-        </div>
+            <div class="columns">
+                <div class="column">
+                    <paginator></paginator>
+                </div>
+            </div>
+        </span>
     </div>
 </template>
 
@@ -26,6 +34,7 @@ export default {
     data: function() {
         return {
             posts: [],
+            links: null,
             loading: true
         };
     },
@@ -33,16 +42,24 @@ export default {
         await this.loadPosts();
     },
     methods: {
-        loadPosts: async function() {
+        loadPosts: async function(url = null) {
+            const urlPath = url ? url : `${process.env.MIX_BASE_URL}/api/posts`;
+
             await axios
-                .get(`${process.env.MIX_BASE_URL}/api/posts`)
+                .get(urlPath)
                 .then(response => {
-                    this.posts = response.data.data;
+                    this.posts = [...this.posts, ...response.data.data];
+                    this.links = response.data.links;
                     this.loading = false;
                 })
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        loadMore: async function() {
+            if (this.links && this.links.next) {
+                await this.loadPosts(this.links.next);
+            }
         }
     }
 };

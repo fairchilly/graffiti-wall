@@ -1,33 +1,46 @@
 <template>
-    <article class="media">
-        <router-link :to="{ name: 'post-detail', params: { postId: postid } }">
-            <figure class="media-left">
-                <p class="image is-64x64">
-                    <img
-                        src="https://bulma.io/images/placeholders/128x128.png"
-                    />
-                </p>
-            </figure>
-            <div class="media-content">
+    <article class="card has-background-white">
+        <router-link
+            :to="{ name: 'post-detail', params: { postId: postid } }"
+            class="has-text-dark"
+        >
+            <div class="card-content">
                 <div class="content">
-                    <p>
-                        <strong>{{ name }}</strong>
-                        <small>@{{ username }}</small>
-                        <br />
-                        {{ content }}
-                    </p>
-
-                    <p v-if="tags.length > 0">
-                        <a v-for="tag in tags" :key="postid + tag.id">
-                            <span class="tag mr-1">
-                                {{ tag.value }}
-                            </span>
-                        </a>
-                    </p>
+                    <div class="columns">
+                        <div
+                            class="column is-flex is-justify-content-space-between"
+                        >
+                            <div>
+                                <strong>{{ name }}</strong>
+                                <small class="has-text-grey">
+                                    @{{ username }}
+                                </small>
+                                <br />
+                            </div>
+                            <div>
+                                <small>
+                                    {{ date | moment("MMMM D, YYYY h:mm A") }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column pt-0">
+                            {{ content }}
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column pt-0">
+                            <p v-if="tags.length > 0">
+                                <a v-for="tag in tags" :key="postid + tag.id">
+                                    <span class="tag is-dark mr-1">
+                                        {{ tag.value }}
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="media-right">
-                <small>June 13, 2021</small>
             </div>
         </router-link>
     </article>
@@ -35,6 +48,6 @@
 
 <script>
 export default {
-    props: ["postid", "name", "username", "tags", "content"]
+    props: ["postid", "name", "username", "tags", "content", "date"]
 };
 </script>
