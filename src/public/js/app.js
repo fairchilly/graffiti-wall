@@ -32561,7 +32561,7 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                            Let's Go!\n                        "
+                      "\n                            Let's Go\n                        "
                     )
                   ]
                 )
@@ -32596,7 +32596,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("div", { staticClass: "is-size-4" }, [
           _vm._v(
-            "\n                Post anonymously or not, the choice is yours\n            "
+            "\n                Post anonymously or not, the choice is yours!\n            "
           )
         ])
       ]

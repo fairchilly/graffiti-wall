@@ -11,7 +11,7 @@
                 </div>
                 <div class="cursive is-size-1 mb-6">Graffiti Wall</div>
                 <div class="is-size-4">
-                    Post anonymously or not, the choice is yours
+                    Post anonymously or not, the choice is yours!
                 </div>
             </section>
             <footer class="modal-card-foot is-radiusless">
@@ -22,7 +22,7 @@
                                 class="button is-success is-fullwidth"
                                 @click="closeModal()"
                             >
-                                Let's Go!
+                                Let's Go
                             </button>
                         </div>
                     </div>
