@@ -8,7 +8,6 @@
                 <a>
                     <span
                         class="tag has-text-white-bis"
-                        v-bind:style="{ backgroundColor: tag.hex_colour }"
                     >
                         {{ tag.name }}
                     </span>

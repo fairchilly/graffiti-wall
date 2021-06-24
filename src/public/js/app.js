@@ -1955,7 +1955,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -32389,20 +32388,13 @@ var render = function() {
           _vm._l(_vm.trendingTags, function(tag) {
             return _c("li", { key: tag.id }, [
               _c("a", [
-                _c(
-                  "span",
-                  {
-                    staticClass: "tag has-text-white-bis",
-                    style: { backgroundColor: tag.hex_colour }
-                  },
-                  [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(tag.name) +
-                        "\n                "
-                    )
-                  ]
-                )
+                _c("span", { staticClass: "tag has-text-white-bis" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(tag.name) +
+                      "\n                "
+                  )
+                ])
               ])
             ])
           }),
