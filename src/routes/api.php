@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\UserController;
 // Post Routes
 Route::prefix('posts')->group(function () {
     Route::get('/archive-summary', [PostController::class, 'archiveSummary']);
+    Route::get('/year/{year}/month/{month}', [PostController::class, 'listByYearAndMonth']);
 
     Route::get('', [PostController::class, 'list']);
     Route::post('', [PostController::class, 'create']);

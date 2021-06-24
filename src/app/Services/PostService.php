@@ -71,6 +71,23 @@ class PostService
     }
 
     /**
+     * Finds an posts by the year and month they were created.
+     * @param  int  $year
+     * @param  int  $month
+     * @return Illuminate\Support\Collection
+     */
+    public function findByYearAndMonth(int $year, int $month)
+    {
+        $posts = Post::with('user', 'tags')
+            ->whereRaw('date_format(created_at, \'%Y\') = ?', [$year])
+            ->whereRaw('date_format(created_at, \'%c\') = ?', [$month])
+            ->orderBy('created_at')
+            ->simplePaginate(15);
+
+        return $posts;
+    }
+
+    /**
      * Creates a new post.
      * @param  array  $request
      * @return Illuminate\Support\Collection
@@ -125,7 +142,7 @@ class PostService
      */
     public function archiveSummary(int $limit = 24)
     {
-        $summary = Post::selectRaw("max(date_format(created_at, '%Y%m')) as date,
+        $summary = Post::selectRaw("max(date_format(created_at, '%Y%c')) as date,
                 date_format(created_at, '%Y') as year,
                 date_format(created_at, '%M') as month,
                 count(*) as count")

@@ -47,6 +47,19 @@ class PostController extends Controller
     }
 
     /**
+     * Searches for posts that were created on a specific year and month.
+     * @param  int  $year
+     * @param  int  $month
+     * @return PostCollection
+     */
+    public function listByYearAndMonth(int $year, int $month)
+    {
+        $posts = $this->posts->findByYearAndMonth($year, $month);
+
+        return new PostCollection($posts);
+    }
+
+    /**
      * Creates a new post, and any tags (if applicable).
      * @param  StorePostRequest  $request
      * @return PostResource
