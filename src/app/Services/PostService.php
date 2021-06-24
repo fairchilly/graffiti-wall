@@ -106,6 +106,22 @@ class PostService
     }
 
     /**
+     * Delete an existing post.
+     * @param  Post   $post
+     * @return boolean
+     */
+    public function delete(Post $post)
+    {
+        if ($post->user_id !== auth()->user()->id) {
+            return false;
+        }
+
+        $post->delete();
+
+        return true;
+    }
+
+    /**
      * Returns a counted archive summary of posts, grouped by year and month.
      * @param  int  $limit
      * @return Illuminate\Support\Collection

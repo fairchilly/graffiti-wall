@@ -3,93 +3,101 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
+use App\Services\AuthenticationService;
 
 class AuthenticationController extends Controller
 {
     /**
-     * Registers a new user.
-     * @param  Request  $request
-     * @return Response
+     * The authentication service implementation.
+     *
+     * @var AuthenticationService
      */
-    public function register(Request $request)
+    protected $authentication;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param  AuthenticationService  $authentication
+     * @return void
+     */
+    public function __construct(AuthenticationService $authentication)
     {
-        // Validate the passed fields
-        $validated_fields = $request->validate([
-            'name' => 'required|string',
-            'username' => 'required|string|unique:users,username',
-            'password' => 'required|string|confirmed',
-        ]);
-
-        // Hash the password
-        $validated_fields['password'] = bcrypt($validated_fields['password']);
-
-        // Create a new user
-        $user = User::create([
-            'name' => $validated_fields['password'],
-            'username' => $validated_fields['username'],
-            'password' => $validated_fields['password'],
-        ]);
-
-        $token = $user->createToken('authToken')->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token,
-        ];
-
-        // Return response with created status code
-        return response($response, 201);
+        $this->authentication = $authentication;
     }
 
     /**
      * Registers a new user.
-     * @param  Request  $request
-     * @return Response
+     * @param  RegisterRequest  $request
+     * @return array
      */
-    public function login(Request $request)
+    public function register(RegisterRequest $request)
     {
-        // Validate the passed fields
-        $validated_fields = $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
+        // Create a new user, with a hashed password
+        $user = $this->authentication->register($request);
 
+        // Create a response object with token
+        $response = $this->createTokenResponse($user);
+
+        // Return the response with created status code
+        return response($response, 201);
+    }
+
+    /**
+     * Logins an existing user.
+     * @param  LoginRequest  $request
+     * @return array
+     */
+    public function login(LoginRequest $request)
+    {
         // Check if user exists
-        $user = User::where('username', $validated_fields['username'])->first();
+        $user = $this->authentication->validate($request);
 
         // User doesn't exist, or the password don't match
-        if (!$user || !Hash::check($validated_fields['password'], $user->password)) {
+        if (!$user) {
 
             // Pass unauthorized status code
             return response(['Incorrect credentials'], 401);
         }
 
-        $token = $user->createToken('authToken')->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token,
-        ];
+        // Create a response object with token
+        $response = $this->createTokenResponse($user);
 
         // Return response with created status code
         return response($response, 201);
     }
 
     /**
-     * Registers a new user.
-     * @param  Request  $request
+     * Logs out the authenticated user.
      * @return void
      */
-    public function logout(Request $request)
+    public function logout()
     {
         // Remove the user token stored in the database
         auth()->user()->tokens()->delete();
 
         // Return void with a no content status code
         return response(null, 204);
+    }
+
+    /**
+     * Returns a token response object.
+     * @param  User  $user
+     * @return array
+     */
+    private function createTokenResponse(User $user)
+    {
+        // Create a new token
+        $token = $user->createToken('authToken')->plainTextToken;
+
+        // Create a response object
+        $response = [
+            'user' => $user,
+            'token' => $token,
+        ];
+
+        return $response;
     }
 }

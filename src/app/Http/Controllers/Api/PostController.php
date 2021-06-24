@@ -101,9 +101,14 @@ class PostController extends Controller
      */
     public function delete(Post $post)
     {
-        $post->delete();
+        $deleted = $this->posts->delete($post);
 
-        // Return nothing, with 204 no content status code
+        // An error occurred, unauthorized
+        if (!$deleted) {
+            return response('Unauthorized', 401);
+        }
+
+        // Successful
         return response(null, 204);
     }
 
