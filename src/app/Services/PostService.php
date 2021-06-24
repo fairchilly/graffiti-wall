@@ -99,6 +99,7 @@ class PostService
      */
     public function update(Post $post, array $request)
     {
+        // User ids don't match, unauthorized
         if ($post->user_id !== auth()->user()->id) {
             return false;
         }
@@ -116,6 +117,7 @@ class PostService
      */
     public function delete(Post $post)
     {
+        // User ids don't match, unauthorized
         if ($post->user_id !== auth()->user()->id) {
             return false;
         }
