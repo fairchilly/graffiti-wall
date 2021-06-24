@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Thinkific Journal</title>
+        <title>Graffiti Wall</title>
 
         <!-- Compiled Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -13,7 +13,7 @@
 
         <!-- VueJS App -->
         <div id="app">
-            <example-component></example-component>
+            <home-page></home-page>
         </div>
         
         <!-- Compiled JS -->
