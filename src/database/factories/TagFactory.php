@@ -22,7 +22,7 @@ class TagFactory extends Factory
     public function definition()
     {
         // Tag value
-        $tag = ucwords($this->faker->realText(25, 1));
+        $tag = strtolower($this->faker->realText(25, 1));
 
         // Remove all non-numeric
         $tag = preg_replace("/[^A-Za-z0-9]/", '', $tag);

@@ -37,5 +37,5 @@ files.keys().map(key =>
 
 const app = new Vue({
     router,
-    el: "#app"
+    el: "#app",
 });

@@ -8,7 +8,9 @@ use App\Http\Resources\Posts\PostCollection;
 use App\Http\Resources\Posts\PostDetailResource;
 use App\Models\Post;
 use App\Services\PostService;
-use App\Services\TagService;
+
+
+use Facades\App\Services\TagService;
 
 class PostController extends Controller
 {
@@ -16,22 +18,18 @@ class PostController extends Controller
      * The post and tag service implementation.
      *
      * @var PostService
-     * @var TagService
      */
     protected $posts;
-    protected $tags;
 
     /**
      * Create a new controller instance.
      *
      * @param  PostService  $posts
-     * @param  TagService   $tags
      * @return void
      */
-    public function __construct(PostService $posts, TagService $tags)
+    public function __construct(PostService $posts)
     {
         $this->posts = $posts;
-        $this->tags = $tags;
     }
 
     /**
@@ -72,9 +70,6 @@ class PostController extends Controller
         // Create the post, if valid
         $post = $this->posts->create($request->all());
 
-        // Create the tags, if needed
-        $tags = $this->tags->create($post);
-
         return new PostResource($post);
     }
 
@@ -107,6 +102,10 @@ class PostController extends Controller
         // An error occurred, unauthorized
         if (!$updated) {
             return response('Unauthorized', 401);
+        } else {
+
+            // Update the tags, if needed
+            $tags = $this->tags->create($post);
         }
 
         // Successful

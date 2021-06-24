@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
+use Facades\App\Services\TagService;
 
 class PostService
 {
@@ -94,7 +95,11 @@ class PostService
      */
     public function create(array $request)
     {
+        // Create the post
         $post = Post::create($request);
+
+        // Update the tags
+        $post = TagService::update($post);
 
         return $post;
     }
@@ -114,6 +119,9 @@ class PostService
 
         $post->fill($request);
         $post->save();
+
+        // Update the tags
+        $post = TagService::update($post);
 
         return true;
     }

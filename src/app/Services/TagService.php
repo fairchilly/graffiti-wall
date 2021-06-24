@@ -9,13 +9,22 @@ use App\Models\Tag;
 class TagService
 {
     /**
-     * Creates new tags given a post.
+     * Updates tags on a post by both adding and/or deleting.
      * @param  Post  $post
-     * @return Illuminate\Support\Collection
+     * @return Post
      */
-    public function create(Post $post)
+    public function update(Post $post)
     {
-        dd('todo');
+        // Removes any old tags found in the pivot table
+        $this->deleteOldTagsRelations($post);
+
+        // Adds any new tags not found in the pivot table
+        $this->addNewTagRelations($post);
+
+        // Reload the post
+        $post = Post::find($post->id);
+
+        return $post;
     }
 
     /**
@@ -50,6 +59,81 @@ class TagService
         // Pregex match looking for the existance of a #, followed by any number of characters (letter, number, underscore)
         preg_match_all("/#(\\w+)/", $content, $tags);
 
-        return $tags[0];
+        $tags = $tags[0];
+
+        // Lowercase tags
+        foreach ($tags as $index => $tag) {
+            $tags[$index] = strtolower($tag);
+        }
+
+        return $tags;
+    }
+
+    /**
+     * Removes any tags from the post_tag table, that is not found in the post content field
+     * @param  Post  $post
+     * @return void
+     */
+    private function deleteOldTagsRelations(Post $post)
+    {
+        // Get the new tags
+        $content_tags = $this->extractTags($post->content);
+
+        // Find the existing tags
+        $existing_tags = $post->tags()->get();
+
+        // Remove any existing tags not found in the content
+        foreach ($existing_tags as $existing_tag) {
+
+            // Compare
+            $exists = in_array($existing_tag->value, $content_tags);
+
+            // Delete tag
+            if (!$exists) {
+                $post->tags()->detach($existing_tag->id);
+            }
+        }
+    }
+
+    /**
+     * Adds any new tags to the post_tag table
+     * @param  Post  $post
+     * @return void
+     */
+    private function addNewTagRelations(Post $post)
+    {
+        // Get the new tags
+        $content_tags = $this->extractTags($post->content);
+
+        // Find the existing tags
+        $existing_tags = $post->tags()->get();
+
+        // Prep for comparison
+        $existing_tags = $existing_tags->pluck('value')->toArray();
+
+        // Filter out any new tags that already exists in the database
+        foreach ($content_tags as $index => $content_tag) {
+
+            // Compare
+            $exists = in_array($content_tag, $existing_tags);
+
+            // Tag already exists, unset
+            if ($exists) {
+                unset($content_tags[$index]);
+            }
+        }
+
+        // Add new tags
+        $existing_tags = Tag::select('value')
+            ->whereIn('value', $content_tags)
+            ->get()
+            ->toArray();
+
+        $content_tags = array_diff($content_tags, $existing_tags);
+
+        foreach ($content_tags as $content_tag) {
+            $tag = Tag::create(['value' => $content_tag]);
+            $post->tags()->attach($tag);
+        }
     }
 }

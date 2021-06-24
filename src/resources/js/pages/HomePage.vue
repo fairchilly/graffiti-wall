@@ -1,5 +1,8 @@
 <template>
     <div>
+        <span v-if="loading">
+            <div class="spinner"></div>
+        </span>
         <div class="columns is-multiline" v-if="posts.length > 0">
             <div
                 class="column is-one-third"
@@ -28,7 +31,6 @@ export default {
     },
     async mounted() {
         await this.loadPosts();
-        this.loading = false;
     },
     methods: {
         loadPosts: async function() {
@@ -36,6 +38,7 @@ export default {
                 .get(`${process.env.MIX_BASE_URL}/api/posts`)
                 .then(response => {
                     this.posts = response.data.data;
+                    this.loading = false;
                 })
                 .catch(error => {
                     console.log(error);
