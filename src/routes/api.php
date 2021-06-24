@@ -49,4 +49,10 @@ Route::prefix('users')->group(function () {
 // Authentication Routes
 Route::prefix('authentication')->group(function () {
     Route::post('/register', [AuthenticationController::class, 'register']);
+    Route::post('/login', [AuthenticationController::class, 'login']);
+
+    // Protected Authentication Routes
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('/logout', [AuthenticationController::class, 'logout']);
+    });
 });
