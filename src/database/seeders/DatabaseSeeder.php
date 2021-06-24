@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Post;
-use App\Models\PostTag;
+//use App\Models\PostTag;
 use App\Models\Tag;
 use App\Models\User;
 use Facades\App\Services\TagService;
@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
                     $matched_tag = Tag::where('value', $tag)->first();
 
                     if ($matched_tag) {
-                        $post_tag = PostTag::create(['post_id' => $post->id, 'tag_id' => $matched_tag->id]);
+                        $post->tags()->attach($matched_tag);
+                        //$post_tag = PostTag::create(['post_id' => $post->id, 'tag_id' => $matched_tag->id]);
                     }
                 }
             }

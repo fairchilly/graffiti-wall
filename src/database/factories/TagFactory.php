@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Facades\App\Repositories\ColourRepository;
 
 class TagFactory extends Factory
 {
@@ -22,9 +21,6 @@ class TagFactory extends Factory
      */
     public function definition()
     {
-        // Available hex colours
-        $colours = ColourRepository::get();
-
         // Tag value
         $tag = ucwords($this->faker->realText(25, 1));
 
@@ -34,11 +30,8 @@ class TagFactory extends Factory
         // Remove all spaces
         $tag = preg_replace("/\s+/", "", $tag);
 
-        $max = count($colours) - 1;
-
         return [
             'value' => '#' . $tag,
-            'hex_colour' => $colours[$this->faker->numberBetween(0, $max)],
         ];
     }
 }

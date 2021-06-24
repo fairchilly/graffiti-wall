@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Post;
-use App\Models\PostTag;
 use App\Models\Tag;
 use App\Models\User;
 
@@ -47,20 +46,12 @@ class PostService
         // Trim, lowercase, and prepend a #
         $tag = trim(strtolower($tag));
         $tag = substr($tag, 0, 1) !== '#' ? '#' . $tag : $tag;
-        $tag_object = Tag::whereRaw('lower(`value`) like ?', ["%$tag%"])->first();
+        $existing_tag = Tag::whereRaw('lower(`value`) like ?', ["%$tag%"])->first();
 
-        $posts = [];
-        if ($tag_object) {
-            $post_ids = PostTag::where('tag_id', $tag_object->id)
-                ->pluck('post_id')
-                ->unique()
-                ->toArray();
-
-            if (count($post_ids) > 0) {
-                $posts = Post::whereIn('id', $post_ids)
-                    ->orderByDesc('created_at')
-                    ->simplePaginate(15);
-            }
+        if ($existing_tag) {
+            $posts = $existing_tag->posts()->get();
+        } else {
+            $posts = collect([]);
         }
 
         return $posts;

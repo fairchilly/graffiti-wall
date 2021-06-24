@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Post;
 use App\Models\PostTag;
 use App\Models\Tag;
-use App\Repositories\ColourRepository;
 
 class TagService
 {
@@ -34,7 +33,6 @@ class TagService
             ->map(function($tag) {
                 $name = Tag::find($tag->tag_id);
                 $tag->name = $name ? $name->value : '#unknown';
-                $tag->hex_colour = $name ? $name->hex_colour : '#7a7a7a';
 
                 return $tag;
             });

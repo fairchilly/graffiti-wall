@@ -36,8 +36,8 @@ class PostFactory extends Factory
 
         // Apply some random tags (2 per post)
         $all_tags = Tag::all()->toArray();
-        $tag_id_1 = $this->faker->numberBetween(1, 5);
-        $tag_id_2 = $this->faker->numberBetween(1, 5);
+        $tag_id_1 = $this->faker->numberBetween(0, 4);
+        $tag_id_2 = $this->faker->numberBetween(5, 9);
 
         // Finally, add tags to the end of the content
         $content .= '<p>' . $all_tags[$tag_id_1]['value'] . ' ' . $all_tags[$tag_id_2]['value'] . '</p>';

@@ -1,2 +1,21 @@
 @import url(https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap);
-#logo{background-clip:text;-webkit-background-clip:text;background-image:url(/img/logo.png);color:transparent;font-family:Permanent Marker,cursive;font-size:2em}#welcome{-webkit-text-fill-color:#fff;-webkit-text-stroke-width:.4px;-webkit-text-stroke-color:#000;background-image:url(/img/graffiti.png);color:#000}.cursive{font-family:Permanent Marker,cursive}
+#logo {
+  font-family: "Permanent Marker", cursive;
+  font-size: 2em;
+  background-image: url("/img/logo.png");
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+#welcome {
+  background-image: url("/img/graffiti.png");
+  color: black;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 0.4px;
+  -webkit-text-stroke-color: black;
+}
+
+.cursive {
+  font-family: "Permanent Marker", cursive;
+}

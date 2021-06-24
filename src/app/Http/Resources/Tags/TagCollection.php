@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Users;
+namespace App\Http\Resources\Tags;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class UserPostCollection extends ResourceCollection
+class TagCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

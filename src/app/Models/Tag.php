@@ -20,6 +20,6 @@ class Tag extends Model
      */
     public function posts()
     {
-        return $this->hasManyThrough(Post::class, PostTag::class, 'tag_id', 'id');
+        return $this->belongsToMany(Post::class);
     }
 }

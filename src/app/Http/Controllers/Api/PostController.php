@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\Posts\PostCollection;
-use App\Http\Resources\Posts\PostResource;
+use App\Http\Resources\Posts\PostDetailResource;
 use App\Models\Post;
 use App\Services\PostService;
 use App\Services\TagService;
@@ -74,7 +74,7 @@ class PostController extends Controller
     {
         $post = $this->posts->findById($post->id);
         
-        return new PostResource($post);
+        return new PostDetailResource($post);
     }
 
     /**

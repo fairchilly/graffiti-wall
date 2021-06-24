@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Posts\PostCollection;
 use App\Models\Tag;
 use App\Services\PostService;
 use App\Services\TagService;
@@ -63,6 +64,8 @@ class TagController extends Controller
      */
     public function posts(string $tag)
     {
-        return $this->posts->listByTag($tag);
+        $posts = $this->posts->listByTag($tag);
+
+        return new PostCollection($posts);
     }
 }
