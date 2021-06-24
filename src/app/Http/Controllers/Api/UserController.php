@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Users\UserPostCollection;
+use App\Http\Resources\Users\UserResource;
 use App\Models\User;
 use App\Services\PostService;
-
 
 class UserController extends Controller
 {
@@ -34,16 +35,18 @@ class UserController extends Controller
      */
     public function posts(User $user)
     {
-        return $this->posts->listByUser($user);
+        $posts =  $this->posts->listByUser($user);
+        
+        return new UserPostCollection($posts);
     }
 
     /**
      * Returns the profile of a user (anonymous not included)
      * @param  User  $user
-     * @return Collection
+     * @return UserResource
      */
     public function profile(User $user)
     {
-        return 'todo';
+        return new UserResource($user);
     }
 }
