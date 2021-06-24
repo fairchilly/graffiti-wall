@@ -8,13 +8,14 @@
         <div class="media-content">
             <div class="content">
                 <p>
-                    <strong>{{ name }}</strong> <small>@{{ username }}</small>
-                    <small>31m</small>
+                    <strong>{{ name }}</strong>
+                    <small>@{{ username }}</small>
                     <br />
                     <span v-html="content">
                         {{ content }}
                     </span>
                 </p>
+
                 <p v-if="tags.length > 0">
                     <a v-for="tag in tags" :key="postid + tag.id">
                         <span
@@ -30,7 +31,7 @@
             </div>
         </div>
         <div class="media-right">
-            <button class="delete"></button>
+            <small>June 13, 2021</small>
         </div>
     </article>
 </template>
