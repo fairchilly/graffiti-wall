@@ -1,0 +1,3 @@
+# Thinkific Journal
+
+TODO
