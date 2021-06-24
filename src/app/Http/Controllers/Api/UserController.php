@@ -36,4 +36,14 @@ class UserController extends Controller
     {
         return $this->posts->listByUser($user);
     }
+
+    /**
+     * Returns the profile of a user (anonymous not included)
+     * @param  User  $user
+     * @return Collection
+     */
+    public function profile(User $user)
+    {
+        return 'todo';
+    }
 }

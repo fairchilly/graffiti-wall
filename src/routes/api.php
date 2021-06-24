@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\UserController;
@@ -17,25 +18,35 @@ use App\Http\Controllers\Api\UserController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
+// Post Routes
 Route::prefix('posts')->group(function () {
     Route::get('/archive-summary', [PostController::class, 'archiveSummary']);
 
     Route::get('', [PostController::class, 'list']);
     Route::post('', [PostController::class, 'create']);
     Route::get('/{post}', [PostController::class, 'details']);
-    Route::put('/{post}', [PostController::class, 'update']);
-    Route::delete('/{post}', [PostController::class, 'delete']);
+
+    // Protected Post Routes
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::put('/{post}', [PostController::class, 'update']);
+        Route::delete('/{post}', [PostController::class, 'delete']);
+    });
 });
 
+// Tag Routes
 Route::prefix('tags')->group(function () {
     Route::get('/trending/{top_count?}', [TagController::class, 'trending']);
     Route::get('/{tag}', [TagController::class, 'posts']);
 });
 
+// User Routes
 Route::prefix('users')->group(function () {
     Route::get('/{user}/posts', [UserController::class, 'posts']);
+    Route::get('/{user}/profile', [UserController::class, 'profile']);
+});
+
+// Authentication Routes
+Route::prefix('authentication')->group(function () {
+    Route::post('/register', [AuthenticationController::class, 'register']);
 });
