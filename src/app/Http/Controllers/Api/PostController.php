@@ -89,9 +89,15 @@ class PostController extends Controller
         $validated = $request->validated();
 
         // Update the post, if valid
-        $post = $this->posts->update($post, $request->all());
+        $updated = $this->posts->update($post, $request->all());
 
-        return new PostResource($post);
+        // An error occurred, unauthorized
+        if (!$updated) {
+            return response('Unauthorized', 401);
+        }
+
+        // Successful
+        return response(null, 204);
     }
 
     /**

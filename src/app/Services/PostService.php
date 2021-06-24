@@ -99,10 +99,14 @@ class PostService
      */
     public function update(Post $post, array $request)
     {
+        if ($post->user_id !== auth()->user()->id) {
+            return false;
+        }
+
         $post->fill($request);
         $post->save();
 
-        return $post;
+        return true;
     }
 
     /**
