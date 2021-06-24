@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+// Catch-all path to let vuejs handle the routing
+Route::get('/{any}', function () {
     return view('index');
-});
+})->where('any', '.*');

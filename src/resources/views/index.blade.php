@@ -13,7 +13,7 @@
 
         <!-- VueJS App -->
         <div id="app">
-            <home-page></home-page>
+            <master-layout></master-layout>
         </div>
         
         <!-- Compiled JS -->
