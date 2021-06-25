@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import CreatePostPage from "./pages/CreatePostPage";
 import PostDetailPage from "./pages/PostDetailPage";
 import TagSearchPage from "./pages/TagSearchPage";
+import ArchiveSearchPage from "./pages/ArchiveSearchPage";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const router = new VueRouter({
             path: "/tag/:tag",
             name: "tag",
             component: TagSearchPage
+        },
+        {
+            path: "/archive/year/:year/month/:month",
+            name: "archive",
+            component: ArchiveSearchPage
         },
         {
             path: "/post/create",

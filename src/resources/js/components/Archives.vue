@@ -7,7 +7,15 @@
         <span>
             <ul class="menu-list" v-if="archives.length > 0">
                 <li v-for="archive in archives" :key="archive.date">
-                    <a>
+                    <router-link
+                        :to="{
+                            name: 'archive',
+                            params: {
+                                year: archive.year,
+                                month: archive.month_number
+                            }
+                        }"
+                    >
                         {{
                             archive.month +
                                 " " +
@@ -16,7 +24,7 @@
                                 archive.count +
                                 ")"
                         }}
-                    </a>
+                    </router-link>
                 </li>
             </ul>
         </span>

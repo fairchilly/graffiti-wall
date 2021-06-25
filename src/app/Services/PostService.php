@@ -158,6 +158,7 @@ class PostService
         $summary = Post::selectRaw("max(date_format(created_at, '%Y%c')) as date,
                 date_format(created_at, '%Y') as year,
                 date_format(created_at, '%M') as month,
+                max(date_format(created_at, '%c')) as month_number,
                 count(*) as count")
             ->groupBy('year')
             ->groupBy('month')
