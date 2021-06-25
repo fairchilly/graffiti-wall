@@ -1,5 +1,12 @@
 <template>
     <div>
+        <article class="message is-info">
+            <div class="message-body is-size-4">
+                Posts containing
+                <span class="tag is-dark is-large ml-1">#{{ tag }}</span>
+            </div>
+        </article>
+
         <spinner :loading="loading" />
 
         <span v-if="posts.length > 0">
@@ -32,6 +39,7 @@
 export default {
     data: function() {
         return {
+            tag: this.$route.params.tag,
             posts: [],
             links: null,
             loading: true
@@ -42,7 +50,9 @@ export default {
     },
     methods: {
         loadPosts: async function(url = null) {
-            const urlPath = url ? url : `${process.env.MIX_BASE_URL}/api/posts`;
+            const urlPath = url
+                ? url
+                : `${process.env.MIX_BASE_URL}/api/tags/${this.tag}`;
 
             await axios
                 .get(urlPath)
@@ -60,6 +70,19 @@ export default {
             if (this.links && this.links.next) {
                 await this.loadPosts(this.links.next);
             }
+        },
+        updateTag: function() {
+            this.tag = this.$route.params.tag;
+        }
+    },
+    watch: {
+        $route() {
+            this.updateTag();
+        },
+        tag: function(val) {
+            this.posts = [];
+            this.loading = true;
+            this.loadPosts();
         }
     }
 };

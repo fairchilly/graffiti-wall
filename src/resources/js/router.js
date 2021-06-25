@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import HomePage from "./pages/HomePage";
 import CreatePostPage from "./pages/CreatePostPage";
 import PostDetailPage from "./pages/PostDetailPage";
+import TagSearchPage from "./pages/TagSearchPage";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const router = new VueRouter({
             path: "/",
             name: "home",
             component: HomePage
+        },
+        {
+            path: "/tag/:tag",
+            name: "tag",
+            component: TagSearchPage
         },
         {
             path: "/post/create",

@@ -31,6 +31,21 @@ files.keys().map(key =>
     )
 );
 
+function sleeper(ms) {
+    return function(x) {
+        return new Promise(resolve => setTimeout(() => resolve(x), ms));
+    };
+}
+
+Vue.mixin({
+    methods: {
+        sleeper: ms =>
+            function(x) {
+                return new Promise(resolve => setTimeout(() => resolve(x), ms));
+            }
+    }
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

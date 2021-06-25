@@ -50,7 +50,7 @@ class PostService
         $existing_tag = Tag::whereRaw('lower(`value`) like ?', ["%$tag%"])->first();
 
         if ($existing_tag) {
-            $posts = $existing_tag->posts()->get();
+            $posts = $existing_tag->posts()->simplePaginate(15);
         } else {
             $posts = collect([]);
         }

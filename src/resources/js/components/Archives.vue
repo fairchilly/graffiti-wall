@@ -3,9 +3,7 @@
         <p class="menu-label">
             Archives
         </p>
-        <span v-if="loading">
-            <div class="spinner"></div>
-        </span>
+        <spinner :loading="loading" />
         <span>
             <ul class="menu-list" v-if="archives.length > 0">
                 <li v-for="archive in archives" :key="archive.date">
@@ -40,6 +38,7 @@ export default {
         loadArchives: async function() {
             await axios
                 .get(`${process.env.MIX_BASE_URL}/api/posts/archive-summary`)
+                .then(this.sleeper(1000))
                 .then(response => {
                     this.archives = response.data;
                     this.loading = false;

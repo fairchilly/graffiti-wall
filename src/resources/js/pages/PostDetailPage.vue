@@ -1,8 +1,6 @@
 <template>
     <span>
-        <span v-if="loading">
-            <div class="spinner"></div>
-        </span>
+        <spinner :loading="loading" />
 
         <span v-if="!loading">
             <article class="card has-background-white">
@@ -81,6 +79,7 @@ export default {
             const { postId } = this.$route.params;
             await axios
                 .get(`${process.env.MIX_BASE_URL}/api/posts/${postId}`)
+                .then(this.sleeper(1000))
                 .then(response => {
                     this.post = response.data.data;
                     this.loading = false;
