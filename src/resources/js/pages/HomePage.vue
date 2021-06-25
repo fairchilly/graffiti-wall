@@ -1,11 +1,22 @@
 <template>
     <div>
+        <nav
+            class="breadcrumb is-medium has-bullet-separator"
+            aria-label="breadcrumbs"
+        >
+            <ul>
+                <li class="is-active">
+                    <a href="/" aria-current="page">Most Recent</a>
+                </li>
+            </ul>
+        </nav>
+
         <spinner :loading="loading" />
 
         <span v-if="posts.length > 0">
-            <div class="columns is-multiline">
+            <div class="columns is-multiline ml-5">
                 <div
-                    class="column is-one-third"
+                    class="column is-full mb-1"
                     v-for="post in posts"
                     :key="post.id"
                 >

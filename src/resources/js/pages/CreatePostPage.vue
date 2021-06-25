@@ -1,7 +1,12 @@
 <template>
     <div>
+        <article class="message is-info">
+            <div class="message-body is-size-4">
+                Write on the Graffiti Wall
+            </div>
+        </article>
         <div class="field">
-            <label class="label">Write on the Graffiti Wall:</label>
+            <!-- <label class="label">Write on the Graffiti Wall:</label> -->
             <div class="control">
                 <textarea
                     id="editor"

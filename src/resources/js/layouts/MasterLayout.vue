@@ -3,12 +3,12 @@
         <top-nav></top-nav>
         <welcome-modal :active="welcomeModalActive"></welcome-modal>
         <sign-up-modal :active="signUpModalActive"></sign-up-modal>
-        <div class="container is-fluid">
+        <div class="container is-fluid ml-6 mr-6">
             <div class="columns">
                 <div class="column is-three-quarters">
                     <router-view></router-view>
                 </div>
-                <div class="column ml-6">
+                <div class="column">
                     <side-nav></side-nav>
                 </div>
             </div>

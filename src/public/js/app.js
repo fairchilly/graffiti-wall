@@ -2531,6 +2531,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2709,6 +2716,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2805,6 +2817,17 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3111,6 +3134,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -34727,7 +34754,7 @@ var render = function() {
       _vm._v(" "),
       _c("sign-up-modal", { attrs: { active: _vm.signUpModalActive } }),
       _vm._v(" "),
-      _c("div", { staticClass: "container is-fluid" }, [
+      _c("div", { staticClass: "container is-fluid ml-6 mr-6" }, [
         _c("div", { staticClass: "columns" }, [
           _c(
             "div",
@@ -34736,7 +34763,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "column ml-6" }, [_c("side-nav")], 1)
+          _c("div", { staticClass: "column" }, [_c("side-nav")], 1)
         ])
       ])
     ],
@@ -34769,17 +34796,28 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("article", { staticClass: "message is-info" }, [
-        _c("div", { staticClass: "message-body is-size-4" }, [
-          _vm._v(
-            "\n            Posts from " +
-              _vm._s(_vm.monthName) +
-              " " +
-              _vm._s(_vm.year) +
-              "\n        "
-          )
-        ])
-      ]),
+      _c(
+        "nav",
+        {
+          staticClass: "breadcrumb is-medium has-bullet-separator",
+          attrs: { "aria-label": "breadcrumbs" }
+        },
+        [
+          _c("ul", [
+            _c("li", { staticClass: "is-active" }, [
+              _c("a", { attrs: { href: "/", "aria-current": "page" } }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.monthName) +
+                    " " +
+                    _vm._s(_vm.year) +
+                    "\n                "
+                )
+              ])
+            ])
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c("spinner", { attrs: { loading: _vm.loading } }),
       _vm._v(" "),
@@ -34787,11 +34825,11 @@ var render = function() {
         ? _c("span", [
             _c(
               "div",
-              { staticClass: "columns is-multiline" },
+              { staticClass: "columns is-multiline ml-5" },
               _vm._l(_vm.posts, function(post) {
                 return _c(
                   "div",
-                  { key: post.id, staticClass: "column is-one-third" },
+                  { key: post.id, staticClass: "column is-full mb-1" },
                   [
                     _c("post-entry", {
                       attrs: {
@@ -34845,11 +34883,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
     _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label" }, [
-        _vm._v("Write on the Graffiti Wall:")
-      ]),
-      _vm._v(" "),
       _c("div", { staticClass: "control" }, [
         _c("textarea", {
           directives: [
@@ -34928,7 +34964,18 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("article", { staticClass: "message is-info" }, [
+      _c("div", { staticClass: "message-body is-size-4" }, [
+        _vm._v("\n            Write on the Graffiti Wall\n        ")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -34954,17 +35001,19 @@ var render = function() {
   return _c(
     "div",
     [
+      _vm._m(0),
+      _vm._v(" "),
       _c("spinner", { attrs: { loading: _vm.loading } }),
       _vm._v(" "),
       _vm.posts.length > 0
         ? _c("span", [
             _c(
               "div",
-              { staticClass: "columns is-multiline" },
+              { staticClass: "columns is-multiline ml-5" },
               _vm._l(_vm.posts, function(post) {
                 return _c(
                   "div",
-                  { key: post.id, staticClass: "column is-one-third" },
+                  { key: post.id, staticClass: "column is-full mb-1" },
                   [
                     _c("post-entry", {
                       attrs: {
@@ -34994,7 +35043,29 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "nav",
+      {
+        staticClass: "breadcrumb is-medium has-bullet-separator",
+        attrs: { "aria-label": "breadcrumbs" }
+      },
+      [
+        _c("ul", [
+          _c("li", { staticClass: "is-active" }, [
+            _c("a", { attrs: { href: "/", "aria-current": "page" } }, [
+              _vm._v("Most Recent")
+            ])
+          ])
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -35166,14 +35237,22 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("article", { staticClass: "message is-info" }, [
-        _c("div", { staticClass: "message-body is-size-4" }, [
-          _vm._v("\n            Posts containing\n            "),
-          _c("span", { staticClass: "tag is-dark is-large ml-1" }, [
-            _vm._v("#" + _vm._s(_vm.tag))
+      _c(
+        "nav",
+        {
+          staticClass: "breadcrumb is-medium has-bullet-separator",
+          attrs: { "aria-label": "breadcrumbs" }
+        },
+        [
+          _c("ul", [
+            _c("li", { staticClass: "is-active" }, [
+              _c("a", { attrs: { href: "/", "aria-current": "page" } }, [
+                _vm._v("#" + _vm._s(_vm.tag))
+              ])
+            ])
           ])
-        ])
-      ]),
+        ]
+      ),
       _vm._v(" "),
       _c("spinner", { attrs: { loading: _vm.loading } }),
       _vm._v(" "),
@@ -35181,11 +35260,11 @@ var render = function() {
         ? _c("span", [
             _c(
               "div",
-              { staticClass: "columns is-multiline" },
+              { staticClass: "columns is-multiline ml-5" },
               _vm._l(_vm.posts, function(post) {
                 return _c(
                   "div",
-                  { key: post.id, staticClass: "column is-one-third" },
+                  { key: post.id, staticClass: "column is-full mb-1" },
                   [
                     _c("post-entry", {
                       attrs: {
