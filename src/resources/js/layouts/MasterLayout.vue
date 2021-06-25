@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pb-6 mb-6">
         <top-nav></top-nav>
         <welcome-modal :active="welcomeModalActive"></welcome-modal>
         <sign-up-modal :active="signUpModalActive"></sign-up-modal>

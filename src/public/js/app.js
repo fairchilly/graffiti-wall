@@ -34747,6 +34747,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "pb-6 mb-6" },
     [
       _c("top-nav"),
       _vm._v(" "),
