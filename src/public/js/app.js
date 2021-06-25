@@ -34812,7 +34812,7 @@ var render = function() {
                     _vm._s(_vm.monthName) +
                     " " +
                     _vm._s(_vm.year) +
-                    "\n                "
+                    " Posts\n                "
                 )
               ])
             ])
@@ -35059,7 +35059,7 @@ var staticRenderFns = [
         _c("ul", [
           _c("li", { staticClass: "is-active" }, [
             _c("a", { attrs: { href: "/", "aria-current": "page" } }, [
-              _vm._v("Most Recent")
+              _vm._v("Most Recent Posts")
             ])
           ])
         ])

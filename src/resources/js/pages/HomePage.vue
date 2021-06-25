@@ -6,7 +6,7 @@
         >
             <ul>
                 <li class="is-active">
-                    <a href="/" aria-current="page">Most Recent</a>
+                    <a href="/" aria-current="page">Most Recent Posts</a>
                 </li>
             </ul>
         </nav>

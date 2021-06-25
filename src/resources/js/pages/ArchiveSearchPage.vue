@@ -7,7 +7,7 @@
             <ul>
                 <li class="is-active">
                     <a href="/" aria-current="page">
-                        {{ monthName }} {{ year }}
+                        {{ monthName }} {{ year }} Posts
                     </a>
                 </li>
             </ul>
