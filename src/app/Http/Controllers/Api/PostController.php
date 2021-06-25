@@ -60,7 +60,7 @@ class PostController extends Controller
     /**
      * Creates a new post, and any tags (if applicable).
      * @param  StorePostRequest  $request
-     * @return PostResource
+     * @return PostDetailResource
      */
     public function create(StorePostRequest $request)
     {
@@ -70,13 +70,13 @@ class PostController extends Controller
         // Create the post, if valid
         $post = $this->posts->create($request->all());
 
-        return new PostResource($post);
+        return new PostDetailResource($post);
     }
 
     /**
      * Returns the full details of a post.
      * @param  Post  $post
-     * @return PostResource
+     * @return PostDetailResource
      */
     public function details(Post $post)
     {
@@ -89,7 +89,7 @@ class PostController extends Controller
      * Updates an existing post with new data.
      * @param  Post  $post
      * @param  StorePostRequest  $request
-     * @return PostResource
+     * @return void
      */
     public function update(Post $post, StorePostRequest $request)
     {

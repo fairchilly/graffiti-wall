@@ -33,7 +33,7 @@
                         >
                             <strong>Post Now</strong>
                         </router-link>
-                        <a class="button is-link">
+                        <a class="button is-link" @click="openModal()">
                             <strong>Sign Up</strong>
                         </a>
                         <a class="button is-light">
@@ -45,3 +45,13 @@
         </div>
     </nav>
 </template>
+
+<script>
+export default {
+    methods: {
+        openModal: function() {
+            this.$parent.openCloseSignUpModal();
+        }
+    }
+};
+</script>

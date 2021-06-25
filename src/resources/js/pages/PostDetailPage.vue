@@ -57,7 +57,7 @@
                         :to="{ name: 'home' }"
                         class="button is-link is-light mt-5"
                     >
-                        Go Back
+                        Back to the Graffiti Wall
                     </router-link>
                 </div>
             </div>

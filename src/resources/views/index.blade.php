@@ -7,7 +7,6 @@
         <title>Graffiti Wall</title>
 
         <!-- Compiled Styles -->
-        <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
@@ -18,7 +17,7 @@
         </div>
         
         <!-- Compiled JS -->
-        <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+        <script src="{{ asset('js/quill.min.js') }}"></script>
         <script src="{{ asset('js/app.js') }}" defer></script>
         
     </body>

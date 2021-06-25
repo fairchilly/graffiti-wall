@@ -62,8 +62,14 @@ class TagService
         $tags = $tags[0];
 
         // Lowercase tags
+        // Ignore tags that are less than 3 characters, or more than 30 chars
         foreach ($tags as $index => $tag) {
-            $tags[$index] = strtolower($tag);
+
+            if (strlen($tag) < 3 || strlen($tag) > 30) {
+                unset($tags[$index]);
+            } else {
+                $tags[$index] = strtolower($tag);
+            }
         }
 
         return $tags;

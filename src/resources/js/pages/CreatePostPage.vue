@@ -55,13 +55,17 @@ export default {
     },
     methods: {
         post: async function(anonymous = true) {
-            console.log(this.content);
+            let content = this.content.replace(/(?:\r\n|\r|\n)/g, "<br>");
             await axios
                 .post(`${process.env.MIX_BASE_URL}/api/posts`, {
-                    content: this.content
+                    content
                 })
                 .then(response => {
-                    console.log(response.data);
+                    const id = response.data.data.id;
+                    this.$router.push({
+                        name: "post-detail",
+                        params: { postId: id }
+                    });
                 })
                 .catch(error => {
                     console.log(error);
