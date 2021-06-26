@@ -8,9 +8,11 @@ require("./bootstrap");
 
 window.Vue = require("vue").default;
 
-Vue.use(require("vue-moment"));
-
 import router from "./router";
+import Vuelidate from "vuelidate";
+
+Vue.use(require("vue-moment"));
+Vue.use(Vuelidate);
 
 /**
  * The following block of code may be used to automatically register your

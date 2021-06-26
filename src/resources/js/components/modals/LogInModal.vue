@@ -8,31 +8,42 @@
                 Log In
             </header>
             <section class="modal-card-body">
-                <div class="field">
-                    <label class="label">Username</label>
-                    <div class="control">
-                        <input
-                            class="input"
-                            type="text"
-                            required
-                            pattern="[a-zA-Z0-9]+"
-                            min="3"
-                            max="30"
+                <form>
+                    <div class="field">
+                        <label class="label">Username</label>
+                        <div class="control">
+                            <input
+                                class="input"
+                                type="text"
+                                v-model="username"
+                                v-bind:class="{
+                                    'is-danger': $v.username.$invalid
+                                }"
+                            />
+                        </div>
+                        <validation-errors
+                            :label="'Username'"
+                            :field="$v.username"
                         />
                     </div>
-                </div>
-                <div class="field">
-                    <label class="label">Password</label>
-                    <div class="control">
-                        <input
-                            class="input"
-                            type="password"
-                            required
-                            min="5"
-                            max="255"
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                            <input
+                                class="input"
+                                type="password"
+                                v-model="password"
+                                v-bind:class="{
+                                    'is-danger': $v.password.$invalid
+                                }"
+                            />
+                        </div>
+                        <validation-errors
+                            :label="'Password'"
+                            :field="$v.password"
                         />
                     </div>
-                </div>
+                </form>
             </section>
             <footer
                 class="modal-card-foot is-flex is-justify-content-center is-radiusless"
@@ -45,12 +56,16 @@
 </template>
 
 <script>
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
+import ValidationErrors from "../ValidationErrors.vue";
+
 export default {
+    components: { ValidationErrors },
     props: ["active"],
     data: function() {
         return {
-            username: false,
-            password: false
+            username: null,
+            password: null
         };
     },
     methods: {
@@ -63,7 +78,7 @@ export default {
                     username: this.username,
                     password: this.password
                 })
-                .then(this.sleeper(1000))
+                // .then(this.sleeper(1000))
                 .then(response => {
                     console.log(response);
                     // this.posts = [...this.posts, ...response.data.data];
@@ -71,8 +86,20 @@ export default {
                     // this.loading = false;
                 })
                 .catch(error => {
-                    console.log(error);
+                    alertify.notify("Invalid credentials", "error", 5);
                 });
+        }
+    },
+    validations: {
+        username: {
+            required,
+            minLength: minLength(3),
+            maxLength: maxLength(10)
+        },
+        password: {
+            required,
+            minLength: minLength(5),
+            maxLength: maxLength(50)
         }
     }
 };

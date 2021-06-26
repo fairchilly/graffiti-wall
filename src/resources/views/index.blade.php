@@ -16,8 +16,12 @@
             <master-layout></master-layout>
         </div>
         
-        <!-- Compiled JS -->
+        
+        <!--Libraries-->
         <script src="{{ asset('js/quill.min.js') }}"></script>
+        <script src="{{ asset('js/alertify.min.js') }}"></script>
+
+        <!-- Compiled JS -->
         <script src="{{ asset('js/app.js') }}" defer></script>
         
     </body>
