@@ -14,12 +14,13 @@
                         <input
                             class="input"
                             type="text"
-                            placeholder="Shannon Fairchild"
-                            required
-                            min="3"
-                            max="50"
+                            v-model="$v.name.$model"
+                            v-bind:class="{
+                                'is-danger': $v.name.$dirty && $v.name.$invalid
+                            }"
                         />
                     </div>
+                    <validation-errors :label="'name'" :field="$v.name" />
                 </div>
                 <div class="field">
                     <label class="label">Username</label>
@@ -27,10 +28,15 @@
                         <input
                             class="input"
                             type="text"
-                            required
-                            pattern="[a-zA-Z0-9]+"
-                            min="3"
-                            max="30"
+                            v-model="$v.username.$model"
+                            v-bind:class="{
+                                'is-danger':
+                                    $v.username.$dirty && $v.username.$invalid
+                            }"
+                        />
+                        <validation-errors
+                            :label="'username'"
+                            :field="$v.username"
                         />
                     </div>
                 </div>
@@ -40,9 +46,15 @@
                         <input
                             class="input"
                             type="password"
-                            required
-                            min="5"
-                            max="255"
+                            v-model="$v.password.$model"
+                            v-bind:class="{
+                                'is-danger':
+                                    $v.password.$dirty && $v.password.$invalid
+                            }"
+                        />
+                        <validation-errors
+                            :label="'password'"
+                            :field="$v.password"
                         />
                     </div>
                 </div>
@@ -52,9 +64,17 @@
                         <input
                             class="input"
                             type="password"
-                            required
-                            min="5"
-                            max="255"
+                            v-model="$v.passwordConfirmation.$model"
+                            v-bind:class="{
+                                'is-danger':
+                                    $v.passwordConfirmation.$dirty &&
+                                    $v.passwordConfirmation.$invalid
+                            }"
+                        />
+                        <validation-errors
+                            :label="'password confirmation'"
+                            :matchLabel="'password'"
+                            :field="$v.passwordConfirmation"
                         />
                     </div>
                 </div>
@@ -62,19 +82,96 @@
             <footer
                 class="modal-card-foot is-flex is-justify-content-center is-radiusless"
             >
-                <button class="button is-link">Sign Up</button>
-                <button class="button" @click="closeModal()">Cancel</button>
+                <spinner :loading="loading" />
+
+                <span v-if="!loading">
+                    <button
+                        class="button is-link"
+                        :disabled="$v.$invalid"
+                        @click="signUp()"
+                    >
+                        Sign Up
+                    </button>
+                    <button class="button" @click="closeModal()">Cancel</button>
+                </span>
             </footer>
         </div>
     </div>
 </template>
 
 <script>
+import {
+    required,
+    minLength,
+    maxLength,
+    sameAs
+} from "vuelidate/lib/validators";
+import Spinner from "../Spinner.vue";
+import ValidationErrors from "../ValidationErrors.vue";
+
 export default {
+    components: { Spinner },
     props: ["active"],
+    data: function() {
+        return {
+            name: "",
+            username: "",
+            password: "",
+            passwordConfirmation: "",
+            loading: false
+        };
+    },
     methods: {
         closeModal: function() {
             this.$parent.openCloseSignUpModal();
+        },
+        signUp: async function() {
+            this.loading = true;
+            await axios
+                .post(
+                    `${process.env.MIX_BASE_URL}/api/authentication/register`,
+                    {
+                        name: this.name,
+                        username: this.username,
+                        password: this.password,
+                        password_confirmation: this.passwordConfirmation
+                    }
+                )
+                .then(this.sleeper(1000))
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    alertify.notify(
+                        "Unable to sign up, please try again",
+                        "error",
+                        5
+                    );
+                });
+            this.loading = false;
+        }
+    },
+    validations: {
+        name: {
+            required,
+            minLength: minLength(3),
+            maxLength: maxLength(100)
+        },
+        username: {
+            required,
+            minLength: minLength(3),
+            maxLength: maxLength(30)
+        },
+        password: {
+            required,
+            minLength: minLength(5),
+            maxLength: maxLength(100)
+        },
+        passwordConfirmation: {
+            required,
+            sameAs: sameAs(function() {
+                return this.password;
+            })
         }
     }
 };

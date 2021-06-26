@@ -2305,8 +2305,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["label", "field"],
+  props: ["label", "matchLabel", "field"],
   data: function data() {
     return {
       username: null,
@@ -2338,6 +2346,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -2451,12 +2462,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     username: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.required,
       minLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.minLength)(3),
-      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.maxLength)(10)
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.maxLength)(30)
     },
     password: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.required,
       minLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.minLength)(5),
-      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.maxLength)(50)
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__.maxLength)(30)
     }
   }
 });
@@ -2474,6 +2485,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var _Spinner_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Spinner.vue */ "./resources/js/components/Spinner.vue");
+/* harmony import */ var _ValidationErrors_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ValidationErrors.vue */ "./resources/js/components/ValidationErrors.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2545,11 +2567,115 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    Spinner: _Spinner_vue__WEBPACK_IMPORTED_MODULE_1__.default
+  },
   props: ["active"],
+  data: function data() {
+    return {
+      name: "",
+      username: "",
+      password: "",
+      passwordConfirmation: "",
+      loading: false
+    };
+  },
   methods: {
     closeModal: function closeModal() {
       this.$parent.openCloseSignUpModal();
+    },
+    signUp: function () {
+      var _signUp = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.loading = true;
+                _context.next = 3;
+                return axios.post("".concat("http://localhost", "/api/authentication/register"), {
+                  name: this.name,
+                  username: this.username,
+                  password: this.password,
+                  password_confirmation: this.passwordConfirmation
+                }).then(this.sleeper(1000)).then(function (response) {
+                  console.log(response);
+                })["catch"](function (error) {
+                  alertify.notify("Unable to sign up, please try again", "error", 5);
+                });
+
+              case 3:
+                this.loading = false;
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function signUp() {
+        return _signUp.apply(this, arguments);
+      }
+
+      return signUp;
+    }()
+  },
+  validations: {
+    name: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.required,
+      minLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.minLength)(3),
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.maxLength)(100)
+    },
+    username: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.required,
+      minLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.minLength)(3),
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.maxLength)(30)
+    },
+    password: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.required,
+      minLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.minLength)(5),
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.maxLength)(100)
+    },
+    passwordConfirmation: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.required,
+      sameAs: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__.sameAs)(function () {
+        return this.password;
+      })
     }
   }
 });
@@ -3503,6 +3629,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 
 
 Vue.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vue-moment.js"));
+Vue.use(__webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js"));
 Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_1__.default);
 /**
  * The following block of code may be used to automatically register your
@@ -33130,6 +33257,156 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-cookies/vue-cookies.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue-cookies/vue-cookies.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+/**
+ * Vue Cookies v1.7.4
+ * https://github.com/cmp-cc/vue-cookies
+ *
+ * Copyright 2016, cmp-cc
+ * Released under the MIT license
+ */
+
+(function () {
+
+  var defaultConfig = {
+    expires: '1d',
+    path: '; path=/',
+    domain: '',
+    secure: '',
+    sameSite: '; SameSite=Lax'
+  };
+
+  var VueCookies = {
+    // install of Vue
+    install: function (Vue) {
+      Vue.prototype.$cookies = this;
+      Vue.$cookies = this;
+    },
+    config: function (expireTimes, path, domain, secure, sameSite) {
+      defaultConfig.expires = expireTimes ? expireTimes : '1d';
+      defaultConfig.path = path ? '; path=' + path : '; path=/';
+      defaultConfig.domain = domain ? '; domain=' + domain : '';
+      defaultConfig.secure = secure ? '; Secure' : '';
+      defaultConfig.sameSite = sameSite ? '; SameSite=' + sameSite : '; SameSite=Lax';
+    },
+    get: function (key) {
+      var value = decodeURIComponent(document.cookie.replace(new RegExp('(?:(?:^|.*;)\\s*' + encodeURIComponent(key).replace(/[\-\.\+\*]/g, '\\$&') + '\\s*\\=\\s*([^;]*).*$)|^.*$'), '$1')) || null;
+
+      if (value && value.substring(0, 1) === '{' && value.substring(value.length - 1, value.length) === '}') {
+        try {
+          value = JSON.parse(value);
+        } catch (e) {
+          return value;
+        }
+      }
+      return value;
+    },
+    set: function (key, value, expireTimes, path, domain, secure, sameSite) {
+      if (!key) {
+        throw new Error('Cookie name is not find in first argument.');
+      } else if (/^(?:expires|max\-age|path|domain|secure|SameSite)$/i.test(key)) {
+        throw new Error('Cookie key name illegality, Cannot be set to ["expires","max-age","path","domain","secure","SameSite"]\t current key name: ' + key);
+      }
+      // support json object
+      if (value && value.constructor === Object) {
+        value = JSON.stringify(value);
+      }
+      var _expires = '';
+      expireTimes = expireTimes == undefined ? defaultConfig.expires : expireTimes;
+      if (expireTimes && expireTimes != 0) {
+        switch (expireTimes.constructor) {
+          case Number:
+            if (expireTimes === Infinity || expireTimes === -1) _expires = '; expires=Fri, 31 Dec 9999 23:59:59 GMT';
+            else _expires = '; max-age=' + expireTimes;
+            break;
+          case String:
+            if (/^(?:\d+(y|m|d|h|min|s))$/i.test(expireTimes)) {
+              // get capture number group
+              var _expireTime = expireTimes.replace(/^(\d+)(?:y|m|d|h|min|s)$/i, '$1');
+              // get capture type group , to lower case
+              switch (expireTimes.replace(/^(?:\d+)(y|m|d|h|min|s)$/i, '$1').toLowerCase()) {
+                  // Frequency sorting
+                case 'm':
+                  _expires = '; max-age=' + +_expireTime * 2592000;
+                  break; // 60 * 60 * 24 * 30
+                case 'd':
+                  _expires = '; max-age=' + +_expireTime * 86400;
+                  break; // 60 * 60 * 24
+                case 'h':
+                  _expires = '; max-age=' + +_expireTime * 3600;
+                  break; // 60 * 60
+                case 'min':
+                  _expires = '; max-age=' + +_expireTime * 60;
+                  break; // 60
+                case 's':
+                  _expires = '; max-age=' + _expireTime;
+                  break;
+                case 'y':
+                  _expires = '; max-age=' + +_expireTime * 31104000;
+                  break; // 60 * 60 * 24 * 30 * 12
+                default:
+                  new Error('unknown exception of "set operation"');
+              }
+            } else {
+              _expires = '; expires=' + expireTimes;
+            }
+            break;
+          case Date:
+            _expires = '; expires=' + expireTimes.toUTCString();
+            break;
+        }
+      }
+      document.cookie =
+          encodeURIComponent(key) + '=' + encodeURIComponent(value) +
+          _expires +
+          (domain ? '; domain=' + domain : defaultConfig.domain) +
+          (path ? '; path=' + path : defaultConfig.path) +
+          (secure == undefined ? defaultConfig.secure : secure ? '; Secure' : '') +
+          (sameSite == undefined ? defaultConfig.sameSite : (sameSite ? '; SameSite=' + sameSite : ''));
+      return this;
+    },
+    remove: function (key, path, domain) {
+      if (!key || !this.isKey(key)) {
+        return false;
+      }
+      document.cookie = encodeURIComponent(key) +
+          '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' +
+          (domain ? '; domain=' + domain : defaultConfig.domain) +
+          (path ? '; path=' + path : defaultConfig.path) +
+          '; SameSite=Lax';
+      return this;
+    },
+    isKey: function (key) {
+      return (new RegExp('(?:^|;\\s*)' + encodeURIComponent(key).replace(/[\-\.\+\*]/g, '\\$&') + '\\s*\\=')).test(document.cookie);
+    },
+    keys: function () {
+      if (!document.cookie) return [];
+      var _keys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, '').split(/\s*(?:\=[^;]*)?;\s*/);
+      for (var _index = 0; _index < _keys.length; _index++) {
+        _keys[_index] = decodeURIComponent(_keys[_index]);
+      }
+      return _keys;
+    }
+  };
+
+  if (true) {
+    module.exports = VueCookies;
+  } else {}
+  // vue-cookies can exist independently,no dependencies library
+  if (typeof window !== 'undefined') {
+    window.$cookies = VueCookies;
+  }
+
+})();
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Archives.vue":
 /*!**********************************************!*\
   !*** ./resources/js/components/Archives.vue ***!
@@ -34866,33 +35143,53 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("span", [
-    _vm.field.hasOwnProperty("required") && !_vm.field.required
-      ? _c("p", { staticClass: "help is-danger" }, [
-          _vm._v("\n        " + _vm._s(_vm.label) + " is required\n    ")
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.field.hasOwnProperty("minLength") && !_vm.field.minLength
-      ? _c("p", { staticClass: "help is-danger" }, [
-          _vm._v(
-            "\n        " +
-              _vm._s(_vm.label) +
-              " must have at least\n        " +
-              _vm._s(_vm.field.$params.minLength.min) +
-              " letters.\n    "
-          )
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.field.hasOwnProperty("maxLength") && !_vm.field.maxLength
-      ? _c("p", { staticClass: "help is-danger" }, [
-          _vm._v(
-            "\n        " +
-              _vm._s(_vm.label) +
-              " must have at most\n        " +
-              _vm._s(_vm.field.$params.maxLength.max) +
-              " letters.\n    "
-          )
+    _vm.field.$dirty
+      ? _c("span", [
+          _vm.field.hasOwnProperty("required") && !_vm.field.required
+            ? _c("p", { staticClass: "help is-danger" }, [
+                _vm._v(
+                  "\n            The " +
+                    _vm._s(_vm.label) +
+                    " is required\n        "
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.field.hasOwnProperty("minLength") && !_vm.field.minLength
+            ? _c("p", { staticClass: "help is-danger" }, [
+                _vm._v(
+                  "\n            The " +
+                    _vm._s(_vm.label) +
+                    " must have at least\n            " +
+                    _vm._s(_vm.field.$params.minLength.min) +
+                    " characters.\n        "
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.field.hasOwnProperty("maxLength") && !_vm.field.maxLength
+            ? _c("p", { staticClass: "help is-danger" }, [
+                _vm._v(
+                  "\n            The " +
+                    _vm._s(_vm.label) +
+                    " must have at most\n            " +
+                    _vm._s(_vm.field.$params.maxLength.max) +
+                    " characters.\n        "
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.field.hasOwnProperty("sameAs") && !_vm.field.sameAs
+            ? _c("p", { staticClass: "help is-danger" }, [
+                _vm._v(
+                  "\n            The " +
+                    _vm._s(_vm.label) +
+                    " must be the same as the " +
+                    _vm._s(_vm.matchLabel) +
+                    ".\n        "
+                )
+              ])
+            : _vm._e()
         ])
       : _vm._e()
   ])
@@ -34943,36 +35240,41 @@ var render = function() {
               { staticClass: "field" },
               [
                 _c("label", { staticClass: "label" }, [_vm._v("Username")]),
-                _vm._v(" "),
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.$v.username) +
+                    "\n                    "
+                ),
                 _c("div", { staticClass: "control" }, [
                   _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.username,
-                        expression: "username"
+                        value: _vm.$v.username.$model,
+                        expression: "$v.username.$model"
                       }
                     ],
                     staticClass: "input",
                     class: {
-                      "is-danger": _vm.$v.username.$invalid
+                      "is-danger":
+                        _vm.$v.username.$dirty && _vm.$v.username.$invalid
                     },
                     attrs: { type: "text" },
-                    domProps: { value: _vm.username },
+                    domProps: { value: _vm.$v.username.$model },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.username = $event.target.value
+                        _vm.$set(_vm.$v.username, "$model", $event.target.value)
                       }
                     }
                   })
                 ]),
                 _vm._v(" "),
                 _c("validation-errors", {
-                  attrs: { label: "Username", field: _vm.$v.username }
+                  attrs: { label: "username", field: _vm.$v.username }
                 })
               ],
               1
@@ -35012,7 +35314,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("validation-errors", {
-                  attrs: { label: "Password", field: _vm.$v.password }
+                  attrs: { label: "password", field: _vm.$v.password }
                 })
               ],
               1
@@ -35097,7 +35399,179 @@ var render = function() {
           [_vm._v("\n            Come Join The Fun\n        ")]
         ),
         _vm._v(" "),
-        _vm._m(0),
+        _c("section", { staticClass: "modal-card-body" }, [
+          _c(
+            "div",
+            { staticClass: "field" },
+            [
+              _c("label", { staticClass: "label" }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "control" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.$v.name.$model,
+                      expression: "$v.name.$model"
+                    }
+                  ],
+                  staticClass: "input",
+                  class: {
+                    "is-danger": _vm.$v.name.$dirty && _vm.$v.name.$invalid
+                  },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.$v.name.$model },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.$v.name, "$model", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("validation-errors", {
+                attrs: { label: "name", field: _vm.$v.name }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c("label", { staticClass: "label" }, [_vm._v("Username")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "control" },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.$v.username.$model,
+                      expression: "$v.username.$model"
+                    }
+                  ],
+                  staticClass: "input",
+                  class: {
+                    "is-danger":
+                      _vm.$v.username.$dirty && _vm.$v.username.$invalid
+                  },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.$v.username.$model },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.$v.username, "$model", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("validation-errors", {
+                  attrs: { label: "username", field: _vm.$v.username }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c("label", { staticClass: "label" }, [_vm._v("Password")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "control" },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.$v.password.$model,
+                      expression: "$v.password.$model"
+                    }
+                  ],
+                  staticClass: "input",
+                  class: {
+                    "is-danger":
+                      _vm.$v.password.$dirty && _vm.$v.password.$invalid
+                  },
+                  attrs: { type: "password" },
+                  domProps: { value: _vm.$v.password.$model },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.$v.password, "$model", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("validation-errors", {
+                  attrs: { label: "password", field: _vm.$v.password }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c("label", { staticClass: "label" }, [_vm._v("Confirm Password")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "control" },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.$v.passwordConfirmation.$model,
+                      expression: "$v.passwordConfirmation.$model"
+                    }
+                  ],
+                  staticClass: "input",
+                  class: {
+                    "is-danger":
+                      _vm.$v.passwordConfirmation.$dirty &&
+                      _vm.$v.passwordConfirmation.$invalid
+                  },
+                  attrs: { type: "password" },
+                  domProps: { value: _vm.$v.passwordConfirmation.$model },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.$v.passwordConfirmation,
+                        "$model",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("validation-errors", {
+                  attrs: {
+                    label: "password confirmation",
+                    matchLabel: "password",
+                    field: _vm.$v.passwordConfirmation
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "footer",
@@ -35106,92 +35580,46 @@ var render = function() {
               "modal-card-foot is-flex is-justify-content-center is-radiusless"
           },
           [
-            _c("button", { staticClass: "button is-link" }, [
-              _vm._v("Sign Up")
-            ]),
+            _c("spinner", { attrs: { loading: _vm.loading } }),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "button",
-                on: {
-                  click: function($event) {
-                    return _vm.closeModal()
-                  }
-                }
-              },
-              [_vm._v("Cancel")]
-            )
-          ]
+            !_vm.loading
+              ? _c("span", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-link",
+                      attrs: { disabled: _vm.$v.$invalid },
+                      on: {
+                        click: function($event) {
+                          return _vm.signUp()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                    Sign Up\n                ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button",
+                      on: {
+                        click: function($event) {
+                          return _vm.closeModal()
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  )
+                ])
+              : _vm._e()
+          ],
+          1
         )
       ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "modal-card-body" }, [
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            staticClass: "input",
-            attrs: {
-              type: "text",
-              placeholder: "Shannon Fairchild",
-              required: "",
-              min: "3",
-              max: "50"
-            }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Username")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            staticClass: "input",
-            attrs: {
-              type: "text",
-              required: "",
-              pattern: "[a-zA-Z0-9]+",
-              min: "3",
-              max: "30"
-            }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Password")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            staticClass: "input",
-            attrs: { type: "password", required: "", min: "5", max: "255" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Confirm Password")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            staticClass: "input",
-            attrs: { type: "password", required: "", min: "5", max: "255" }
-          })
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

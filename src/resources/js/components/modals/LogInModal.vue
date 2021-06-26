@@ -11,18 +11,21 @@
                 <form>
                     <div class="field">
                         <label class="label">Username</label>
+                        {{ $v.username }}
                         <div class="control">
                             <input
                                 class="input"
                                 type="text"
-                                v-model="username"
+                                v-model="$v.username.$model"
                                 v-bind:class="{
-                                    'is-danger': $v.username.$invalid
+                                    'is-danger':
+                                        $v.username.$dirty &&
+                                        $v.username.$invalid
                                 }"
                             />
                         </div>
                         <validation-errors
-                            :label="'Username'"
+                            :label="'username'"
                             :field="$v.username"
                         />
                     </div>
@@ -39,7 +42,7 @@
                             />
                         </div>
                         <validation-errors
-                            :label="'Password'"
+                            :label="'password'"
                             :field="$v.password"
                         />
                     </div>
@@ -94,12 +97,12 @@ export default {
         username: {
             required,
             minLength: minLength(3),
-            maxLength: maxLength(10)
+            maxLength: maxLength(30)
         },
         password: {
             required,
             minLength: minLength(5),
-            maxLength: maxLength(50)
+            maxLength: maxLength(30)
         }
     }
 };

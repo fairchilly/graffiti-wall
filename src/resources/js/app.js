@@ -12,6 +12,7 @@ import router from "./router";
 import Vuelidate from "vuelidate";
 
 Vue.use(require("vue-moment"));
+Vue.use(require("vue-cookies"));
 Vue.use(Vuelidate);
 
 /**
