@@ -18,7 +18,6 @@
         
         
         <!--Libraries-->
-        <script src="{{ asset('js/quill.min.js') }}"></script>
         <script src="{{ asset('js/alertify.min.js') }}"></script>
 
         <!-- Compiled JS -->

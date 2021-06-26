@@ -14,7 +14,6 @@ const mix = require("laravel-mix");
 mix.js("resources/js/app.js", "public/js")
     .vue()
     .sass("resources/sass/app.scss", "public/css")
-    .copy("node_modules/quill/dist/quill.min.js", "public/js/quill.min.js")
     .copy(
         "node_modules/alertifyjs/build/alertify.min.js",
         "public/js/alertify.min.js"

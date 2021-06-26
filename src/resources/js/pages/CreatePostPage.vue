@@ -5,7 +5,7 @@
             <div class="control">
                 <textarea
                     id="editor"
-                    class="textarea is-radiusless"
+                    class="textarea"
                     placeholder="The #graffitwall is great!"
                     rows="10"
                     v-model="content"
@@ -14,7 +14,11 @@
         </div>
         <div class="field is-grouped">
             <div class="control">
-                <button class="button is-info" @click="post()">
+                <button
+                    class="button is-info"
+                    @click="post()"
+                    :disabled="content.length < 4 || content.length > 65535"
+                >
                     Post as @{{
                         isAuthenticated
                             ? $cookies.get("user").username
@@ -40,17 +44,6 @@ export default {
         return {
             content: ""
         };
-    },
-    mounted() {
-        var quill = new Quill("#editor", {
-            modules: {
-                toolbar: [
-                    [{ header: [1, 2, false] }],
-                    ["bold", "italic", "underline"]
-                ]
-            },
-            theme: "snow"
-        });
     },
     methods: {
         post: async function() {

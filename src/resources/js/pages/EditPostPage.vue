@@ -13,7 +13,7 @@
                     <div class="control">
                         <textarea
                             id="editor"
-                            class="textarea is-radiusless"
+                            class="textarea"
                             placeholder="The #graffitwall is great!"
                             rows="10"
                             v-model="post.content"
@@ -22,7 +22,14 @@
                 </div>
                 <div class="field is-grouped">
                     <div class="control">
-                        <button class="button is-info" @click="editPost()">
+                        <button
+                            class="button is-info"
+                            @click="editPost()"
+                            :disabled="
+                                post.content.length < 4 ||
+                                    post.content.length > 65535
+                            "
+                        >
                             Update post
                         </button>
                     </div>
@@ -49,26 +56,18 @@
 </template>
 
 <script>
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
+
 export default {
     data: function() {
         return {
-            post: {},
+            post: { content: "" },
             canModify: false,
             loading: true
         };
     },
     async mounted() {
         await this.loadPost();
-
-        var quill = new Quill("#editor", {
-            modules: {
-                toolbar: [
-                    [{ header: [1, 2, false] }],
-                    ["bold", "italic", "underline"]
-                ]
-            },
-            theme: "snow"
-        });
     },
     methods: {
         loadPost: async function() {
@@ -132,6 +131,13 @@ export default {
     watch: {
         post: function(val) {
             this.checkCanModify();
+        }
+    },
+    validations: {
+        content: {
+            required,
+            minLength: minLength(3),
+            maxLength: maxLength(65535)
         }
     }
 };

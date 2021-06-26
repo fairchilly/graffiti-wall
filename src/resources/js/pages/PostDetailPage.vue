@@ -56,7 +56,7 @@
                 </div>
                 <header
                     v-if="canModify"
-                    class="card-header is-shadowless post-header is-flex is-justify-content-center pt-1 pb-1"
+                    class="card-header is-shadowless post-header is-flex is-justify-content-center"
                 >
                     <router-link
                         :to="{
@@ -66,19 +66,12 @@
                             }
                         }"
                     >
-                        <button class="card-header-icon pl-1 pr-1">
-                            <span class="icon has-text-black">
-                                <i class="fas fa-pencil-alt"></i>
-                            </span>
+                        <button class="button mt-2 mb-2">
+                            <i class="fas fa-pencil-alt pr-1"></i> Edit
                         </button>
                     </router-link>
-                    <button
-                        class="card-header-icon pl-1 pr-1"
-                        @click="deletePost()"
-                    >
-                        <span class="icon has-text-black">
-                            <i class="fas fa-trash-alt"></i>
-                        </span>
+                    <button class="button ml-2 mt-2 mb-2" @click="deletePost()">
+                        <i class="fas fa-trash-alt pr-1"></i> Delete
                     </button>
                 </header>
             </article>

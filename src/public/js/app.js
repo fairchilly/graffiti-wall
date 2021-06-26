@@ -3333,21 +3333,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       content: ""
     };
-  },
-  mounted: function mounted() {
-    var quill = new Quill("#editor", {
-      modules: {
-        toolbar: [[{
-          header: [1, 2, false]
-        }], ["bold", "italic", "underline"]]
-      },
-      theme: "snow"
-    });
   },
   methods: {
     post: function () {
@@ -3429,6 +3423,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3485,10 +3480,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      post: {},
+      post: {
+        content: ""
+      },
       canModify: false,
       loading: true
     };
@@ -3497,7 +3502,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var quill;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -3506,16 +3510,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return _this.loadPost();
 
             case 2:
-              quill = new Quill("#editor", {
-                modules: {
-                  toolbar: [[{
-                    header: [1, 2, false]
-                  }], ["bold", "italic", "underline"]]
-                },
-                theme: "snow"
-              });
-
-            case 3:
             case "end":
               return _context.stop();
           }
@@ -3614,6 +3608,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     post: function post(val) {
       this.checkCanModify();
+    }
+  },
+  validations: {
+    content: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.required,
+      minLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.minLength)(3),
+      maxLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__.maxLength)(65535)
     }
   }
 });
@@ -3781,13 +3782,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -37210,7 +37204,7 @@ var render = function() {
               expression: "content"
             }
           ],
-          staticClass: "textarea is-radiusless",
+          staticClass: "textarea",
           attrs: {
             id: "editor",
             placeholder: "The #graffitwall is great!",
@@ -37235,6 +37229,9 @@ var render = function() {
           "button",
           {
             staticClass: "button is-info",
+            attrs: {
+              disabled: _vm.content.length < 4 || _vm.content.length > 65535
+            },
             on: {
               click: function($event) {
                 return _vm.post()
@@ -37327,7 +37324,7 @@ var render = function() {
                             expression: "post.content"
                           }
                         ],
-                        staticClass: "textarea is-radiusless",
+                        staticClass: "textarea",
                         attrs: {
                           id: "editor",
                           placeholder: "The #graffitwall is great!",
@@ -37352,6 +37349,11 @@ var render = function() {
                         "button",
                         {
                           staticClass: "button is-info",
+                          attrs: {
+                            disabled:
+                              _vm.post.content.length < 4 ||
+                              _vm.post.content.length > 65535
+                          },
                           on: {
                             click: function($event) {
                               return _vm.editPost()
@@ -37602,7 +37604,7 @@ var render = function() {
                       "header",
                       {
                         staticClass:
-                          "card-header is-shadowless post-header is-flex is-justify-content-center pt-1 pb-1"
+                          "card-header is-shadowless post-header is-flex is-justify-content-center"
                       },
                       [
                         _c(
@@ -37618,35 +37620,29 @@ var render = function() {
                             }
                           },
                           [
-                            _c(
-                              "button",
-                              { staticClass: "card-header-icon pl-1 pr-1" },
-                              [
-                                _c(
-                                  "span",
-                                  { staticClass: "icon has-text-black" },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fas fa-pencil-alt"
-                                    })
-                                  ]
-                                )
-                              ]
-                            )
+                            _c("button", { staticClass: "button mt-2 mb-2" }, [
+                              _c("i", {
+                                staticClass: "fas fa-pencil-alt pr-1"
+                              }),
+                              _vm._v(" Edit\n                    ")
+                            ])
                           ]
                         ),
                         _vm._v(" "),
                         _c(
                           "button",
                           {
-                            staticClass: "card-header-icon pl-1 pr-1",
+                            staticClass: "button ml-2 mt-2 mb-2",
                             on: {
                               click: function($event) {
                                 return _vm.deletePost()
                               }
                             }
                           },
-                          [_vm._m(0)]
+                          [
+                            _c("i", { staticClass: "fas fa-trash-alt pr-1" }),
+                            _vm._v(" Delete\n                ")
+                          ]
                         )
                       ],
                       1
@@ -37660,16 +37656,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "icon has-text-black" }, [
-      _c("i", { staticClass: "fas fa-trash-alt" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

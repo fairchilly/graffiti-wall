@@ -27,7 +27,6 @@
         "@fortawesome/fontawesome-free": "^5.15.3",
         "alertifyjs": "^1.13.1",
         "moment": "^2.29.1",
-        "quill": "^1.3.7",
         "vee-validate": "^4.4.5",
         "vue-cookies": "^1.7.4",
         "vue-moment": "^4.1.0",
