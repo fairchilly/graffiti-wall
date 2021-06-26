@@ -3,6 +3,7 @@
         <top-nav></top-nav>
         <welcome-modal :active="welcomeModalActive"></welcome-modal>
         <sign-up-modal :active="signUpModalActive"></sign-up-modal>
+        <log-in-modal :active="logInModalActive"></log-in-modal>
         <div class="container is-fluid ml-6 mr-6">
             <div class="columns">
                 <div class="column is-three-quarters">
@@ -25,7 +26,8 @@ export default {
             )
                 ? false
                 : true,
-            signUpModalActive: false
+            signUpModalActive: false,
+            logInModalActive: false
         };
     },
     methods: {
@@ -34,8 +36,10 @@ export default {
             this.welcomeModalActive = false;
         },
         openCloseSignUpModal: function() {
-            console.log(this.signUpModalActive);
             this.signUpModalActive = !this.signUpModalActive;
+        },
+        openCloseLogInModal: function() {
+            this.logInModalActive = !this.logInModalActive;
         }
     }
 };

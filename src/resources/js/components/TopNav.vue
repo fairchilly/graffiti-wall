@@ -33,11 +33,11 @@
                         >
                             <strong>Post Now</strong>
                         </router-link>
-                        <a class="button is-link" @click="openModal()">
+                        <a class="button is-link" @click="openSignUpModal()">
                             <strong>Sign Up</strong>
                         </a>
-                        <a class="button is-light">
-                            Log In
+                        <a class="button is-light" @click="openLogInModal()">
+                            <strong>Log In</strong>
                         </a>
                     </div>
                 </div>
@@ -49,8 +49,11 @@
 <script>
 export default {
     methods: {
-        openModal: function() {
+        openSignUpModal: function() {
             this.$parent.openCloseSignUpModal();
+        },
+        openLogInModal: function() {
+            this.$parent.openCloseLogInModal();
         }
     }
 };
