@@ -82,7 +82,7 @@
             <footer
                 class="modal-card-foot is-flex is-justify-content-center is-radiusless"
             >
-                <spinner :loading="loading" />
+                <spinner :loading="loading" size="small" />
 
                 <span v-if="!loading">
                     <button
@@ -106,8 +106,8 @@ import {
     maxLength,
     sameAs
 } from "vuelidate/lib/validators";
-import Spinner from "../Spinner.vue";
-import ValidationErrors from "../ValidationErrors.vue";
+import Spinner from "../../common/Spinner.vue";
+import ValidationErrors from "../../common/ValidationErrors.vue";
 
 export default {
     components: { Spinner },
@@ -139,16 +139,23 @@ export default {
                 )
                 .then(this.sleeper(1000))
                 .then(response => {
-                    console.log(response);
+                    // Set token and user values
+                    const { token, user } = response.data;
+                    $cookies.set("token", token);
+                    $cookies.set("user", user);
+
+                    // Refresh page
+                    this.$router.go(0);
                 })
                 .catch(error => {
                     alertify.notify(
-                        "Unable to sign up, please try again",
+                        "Username already exists, please try again",
                         "error",
                         5
                     );
+
+                    this.loading = false;
                 });
-            this.loading = false;
         }
     },
     validations: {

@@ -30,6 +30,7 @@ Route::prefix('posts')->group(function () {
 
     // Protected Post Routes
     Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('/auth', [PostController::class, 'createWithUser']);
         Route::put('/{post}', [PostController::class, 'update']);
         Route::delete('/{post}', [PostController::class, 'delete']);
     });
@@ -44,7 +45,6 @@ Route::prefix('tags')->group(function () {
 // User Routes
 Route::prefix('users')->group(function () {
     Route::get('/{user}/posts', [UserController::class, 'posts']);
-    Route::get('/{user}/profile', [UserController::class, 'profile']);
 });
 
 // Authentication Routes

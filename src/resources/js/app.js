@@ -15,6 +15,9 @@ Vue.use(require("vue-moment"));
 Vue.use(require("vue-cookies"));
 Vue.use(Vuelidate);
 
+// Vue cookies configuration
+Vue.$cookies.config("7d");
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

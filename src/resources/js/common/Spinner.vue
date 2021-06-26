@@ -2,7 +2,10 @@
     <span v-if="loading">
         <div class="columns">
             <div class="column is-flex is-justify-content-center">
-                <div class="spinner"></div>
+                <div
+                    class="spinner"
+                    v-bind:class="{ 'spinner-sm': size === 'small' }"
+                ></div>
             </div>
         </div>
     </span>
@@ -10,6 +13,6 @@
 
 <script>
 export default {
-    props: ["loading"]
+    props: ["loading", "size"]
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <article class="card has-background-white">
+    <article class="card has-background-white is-shadowless is-radiusless post">
         <router-link
             :to="{ name: 'post-detail', params: { postId: postid } }"
             class="has-text-dark"
@@ -13,7 +13,16 @@
                             <div>
                                 <strong>{{ name }}</strong>
                                 <small class="has-text-grey">
-                                    @{{ username }}
+                                    <router-link
+                                        :to="{
+                                            name: 'user',
+                                            params: {
+                                                username: username
+                                            }
+                                        }"
+                                    >
+                                        @{{ username }}
+                                    </router-link>
                                 </small>
                                 <br />
                             </div>
@@ -31,13 +40,7 @@
                     </div>
                     <div class="columns">
                         <div class="column pt-0">
-                            <p v-if="tags.length > 0">
-                                <a v-for="tag in tags" :key="postid + tag.id">
-                                    <span class="tag is-dark mr-1">
-                                        {{ tag.value }}
-                                    </span>
-                                </a>
-                            </p>
+                            <tags :id="postid" :tags="tags" />
                         </div>
                     </div>
                 </div>

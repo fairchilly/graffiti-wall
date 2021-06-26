@@ -6,6 +6,8 @@ import CreatePostPage from "./pages/CreatePostPage";
 import PostDetailPage from "./pages/PostDetailPage";
 import TagSearchPage from "./pages/TagSearchPage";
 import ArchiveSearchPage from "./pages/ArchiveSearchPage";
+import UserSearchPage from "./pages/UserSearchPage";
+import EditPostPage from "./pages/EditPostPage";
 
 Vue.use(VueRouter);
 
@@ -17,6 +19,11 @@ const router = new VueRouter({
             path: "/",
             name: "home",
             component: HomePage
+        },
+        {
+            path: "/user/:username",
+            name: "user",
+            component: UserSearchPage
         },
         {
             path: "/tag/:tag",
@@ -37,6 +44,11 @@ const router = new VueRouter({
             path: "/post/:postId",
             name: "post-detail",
             component: PostDetailPage
+        },
+        {
+            path: "/post/:postId/edit",
+            name: "edit-post",
+            component: EditPostPage
         }
     ]
 });

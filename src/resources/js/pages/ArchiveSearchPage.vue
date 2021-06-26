@@ -1,43 +1,15 @@
 <template>
     <div>
-        <nav
-            class="breadcrumb is-medium has-bullet-separator"
-            aria-label="breadcrumbs"
+        <div
+            class="is-flex is-justify-content-space-between is-align-items-flex-end mb-5 mr-5"
         >
-            <ul>
-                <li class="is-active">
-                    <a href="/" aria-current="page">
-                        {{ monthName }} {{ year }} Posts
-                    </a>
-                </li>
-            </ul>
-        </nav>
+            <back-to-graffiti-wall-button />
+            <div class="is-size-5">{{ monthName }} {{ year }} Posts</div>
+        </div>
 
         <spinner :loading="loading" />
 
-        <span v-if="posts.length > 0">
-            <div class="columns is-multiline ml-5">
-                <div
-                    class="column is-full mb-1"
-                    v-for="post in posts"
-                    :key="post.id"
-                >
-                    <post-entry
-                        :postid="post.id"
-                        :name="post.user_name"
-                        :username="post.user_username"
-                        :tags="post.tags"
-                        :content="post.content"
-                        :date="post.created_at"
-                    ></post-entry>
-                </div>
-            </div>
-            <div class="columns" v-if="links && links.next">
-                <div class="column">
-                    <paginator></paginator>
-                </div>
-            </div>
-        </span>
+        <post-list :posts="posts" :links="links"></post-list>
     </div>
 </template>
 
@@ -84,7 +56,11 @@ export default {
                     this.loading = false;
                 })
                 .catch(error => {
-                    console.log(error);
+                    alertify.notify(
+                        `Unable to load posts from summary ${this.monthName} ${this.year}`,
+                        "error",
+                        5
+                    );
                 });
         },
         loadMore: async function() {

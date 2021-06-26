@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Users\UserPostCollection;
-use App\Http\Resources\Users\UserResource;
+use App\Http\Resources\Posts\PostCollection;
 use App\Models\User;
 use App\Services\PostService;
 
@@ -29,24 +28,14 @@ class UserController extends Controller
     }
 
     /**
-     * Returns a list of posts authored by a particular user.
-     * @param  User  $user
+     * Returns a list of posts authored by a particular username.
+     * @param  string  $user
      * @return Collection
      */
-    public function posts(User $user)
+    public function posts(string $username)
     {
-        $posts =  $this->posts->listByUser($user);
+        $posts =  $this->posts->listByUsername($username);
         
-        return new UserPostCollection($posts);
-    }
-
-    /**
-     * Returns the profile of a user (anonymous not included)
-     * @param  User  $user
-     * @return UserResource
-     */
-    public function profile(User $user)
-    {
-        return new UserResource($user);
+        return new PostCollection($posts);
     }
 }

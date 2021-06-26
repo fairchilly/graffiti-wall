@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
@@ -17,7 +18,7 @@ class AuthenticationService
     public function register(RegisterRequest $request)
     {
         $user = User::create([
-            'name' => $request['password'],
+            'name' => $request['name'],
             'username' => $request['username'],
             'password' => bcrypt($request['password']),
         ]);

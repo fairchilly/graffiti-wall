@@ -52,7 +52,11 @@ export default {
                     this.loading = false;
                 })
                 .catch(error => {
-                    console.log(error);
+                    alertify.notify(
+                        "Unable to load archive summary",
+                        "error",
+                        5
+                    );
                 });
         }
     }

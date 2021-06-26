@@ -58,7 +58,7 @@ class PostController extends Controller
     }
 
     /**
-     * Creates a new post, and any tags (if applicable).
+     * Creates a new anonymous post, and any tags (if applicable).
      * @param  StorePostRequest  $request
      * @return PostDetailResource
      */
@@ -68,7 +68,23 @@ class PostController extends Controller
         $validated = $request->validated();
 
         // Create the post, if valid
-        $post = $this->posts->create($request->all());
+        $post = $this->posts->create($request);
+
+        return new PostDetailResource($post);
+    }
+
+    /**
+     * Creates a new user post, and any tags (if applicable).
+     * @param  StorePostRequest  $request
+     * @return PostDetailResource
+     */
+    public function createWithUser(StorePostRequest $request)
+    {
+        // Validate the request
+        $validated = $request->validated();
+
+        // Create the post, if valid
+        $post = $this->posts->create($request);
 
         return new PostDetailResource($post);
     }
@@ -96,17 +112,13 @@ class PostController extends Controller
         // Validate the request
         $validated = $request->validated();
 
-        // Update the post, if valid
-        $updated = $this->posts->update($post, $request->all());
-
-        // An error occurred, unauthorized
-        if (!$updated) {
+        // Throw unauthroized error if it's the wrong user
+        if ($request->user()->id != $post->user_id) {
             return response('Unauthorized', 401);
-        } else {
-
-            // Update the tags, if needed
-            $tags = $this->tags->create($post);
         }
+
+        // Update the post, if valid
+        $post = $this->posts->update($post, $request);
 
         // Successful
         return response(null, 204);
@@ -119,12 +131,12 @@ class PostController extends Controller
      */
     public function delete(Post $post)
     {
-        $deleted = $this->posts->delete($post);
-
-        // An error occurred, unauthorized
-        if (!$deleted) {
+        // Throw unauthroized error if it's the wrong user
+        if (request()->user()->id != $post->user_id) {
             return response('Unauthorized', 401);
         }
+
+        $this->posts->delete($post);
 
         // Successful
         return response(null, 204);

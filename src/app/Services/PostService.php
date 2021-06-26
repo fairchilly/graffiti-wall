@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -24,15 +25,30 @@ class PostService
     }
 
     /**
-     * Returns a list of posts authored by a particular user.
-     * @param  User  $user
+     * Returns a list of posts authored by a particular username.
+     * @param  string  $username
      * @return Illuminate\Support\Collection
      */
-    public function listByUser(User $user)
+    public function listByUsername(string $username)
     {
-        $posts = Post::where('user_id', $user->id)
-            ->orderByDesc('created_at')
-            ->simplePaginate(15);
+        // Special anonymous case
+        if (strtolower($username) == 'anonymous') {
+            $posts = Post::where('user_id', null)
+                ->orderByDesc('created_at')
+                ->simplePaginate(15);
+        } else {
+
+            $user = User::where('username', $username)->first();
+
+            if ($user) {
+                $posts = $user
+                    ->posts()
+                    ->orderByDesc('created_at')
+                    ->simplePaginate(15);
+            } else {
+                $posts = collect([]);
+            }
+        }
 
         return $posts;
     }
@@ -50,7 +66,10 @@ class PostService
         $existing_tag = Tag::whereRaw('lower(`value`) like ?', ["%$tag%"])->first();
 
         if ($existing_tag) {
-            $posts = $existing_tag->posts()->simplePaginate(15);
+            $posts = $existing_tag
+                ->posts()
+                ->orderByDesc('created_at')
+                ->simplePaginate(15);
         } else {
             $posts = collect([]);
         }
@@ -90,18 +109,20 @@ class PostService
 
     /**
      * Creates a new post.
-     * @param  array  $request
+     * @param  StorePostRequest  $request
      * @return Illuminate\Support\Collection
      */
-    public function create(array $request)
+    public function create(StorePostRequest $request)
     {
+        $fields = $request->all();
+
         // Check for user authentication
-        if (auth()->user()) {
-            $request['user_id'] = auth()->user()->id;
+        if ($request->user()) {
+            $fields['user_id'] = $request->user()->id;
         }
 
         // Create the post
-        $post = Post::create($request);
+        $post = Post::create($fields);
 
         // Update the tags
         $post = TagService::update($post);
@@ -112,23 +133,20 @@ class PostService
     /**
      * Updates an existing post.
      * @param  Post   $post
-     * @param  array  $request
+     * @param  StorePostRequest  $request
      * @return Illuminate\Support\Collection
      */
-    public function update(Post $post, array $request)
+    public function update(Post $post, StorePostRequest $request)
     {
-        // User ids don't match, unauthorized
-        if ($post->user_id !== auth()->user()->id) {
-            return false;
-        }
+        $fields = $request->all();
 
-        $post->fill($request);
+        $post->fill($fields);
         $post->save();
 
         // Update the tags
         $post = TagService::update($post);
 
-        return true;
+        return $post;
     }
 
     /**
@@ -138,14 +156,7 @@ class PostService
      */
     public function delete(Post $post)
     {
-        // User ids don't match, unauthorized
-        if ($post->user_id !== auth()->user()->id) {
-            return false;
-        }
-
         $post->delete();
-
-        return true;
     }
 
     /**

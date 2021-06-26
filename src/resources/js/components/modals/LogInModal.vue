@@ -11,7 +11,6 @@
                 <form>
                     <div class="field">
                         <label class="label">Username</label>
-                        {{ $v.username }}
                         <div class="control">
                             <input
                                 class="input"
@@ -35,9 +34,11 @@
                             <input
                                 class="input"
                                 type="password"
-                                v-model="password"
+                                v-model="$v.password.$model"
                                 v-bind:class="{
-                                    'is-danger': $v.password.$invalid
+                                    'is-danger':
+                                        $v.password.$dirty &&
+                                        $v.password.$invalid
                                 }"
                             />
                         </div>
@@ -51,8 +52,18 @@
             <footer
                 class="modal-card-foot is-flex is-justify-content-center is-radiusless"
             >
-                <button class="button is-link" @click="logIn()">Log In</button>
-                <button class="button" @click="closeModal()">Cancel</button>
+                <spinner :loading="loading" size="small" />
+
+                <span v-if="!loading">
+                    <button
+                        class="button is-link"
+                        :disabled="$v.$invalid"
+                        @click="logIn()"
+                    >
+                        Log In
+                    </button>
+                    <button class="button" @click="closeModal()">Cancel</button>
+                </span>
             </footer>
         </div>
     </div>
@@ -60,15 +71,16 @@
 
 <script>
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
-import ValidationErrors from "../ValidationErrors.vue";
+import ValidationErrors from "../../common/ValidationErrors.vue";
 
 export default {
     components: { ValidationErrors },
     props: ["active"],
     data: function() {
         return {
-            username: null,
-            password: null
+            username: "",
+            password: "",
+            loading: false
         };
     },
     methods: {
@@ -76,20 +88,25 @@ export default {
             this.$parent.openCloseLogInModal();
         },
         logIn: async function() {
+            this.loading = true;
             await axios
                 .post(`${process.env.MIX_BASE_URL}/api/authentication/login`, {
                     username: this.username,
                     password: this.password
                 })
-                // .then(this.sleeper(1000))
+                .then(this.sleeper(1000))
                 .then(response => {
-                    console.log(response);
-                    // this.posts = [...this.posts, ...response.data.data];
-                    // this.links = response.data.links;
-                    // this.loading = false;
+                    // Set token and user values
+                    const { token, user } = response.data;
+                    $cookies.set("token", token);
+                    $cookies.set("user", user);
+
+                    // Refresh page
+                    this.$router.go(0);
                 })
                 .catch(error => {
                     alertify.notify("Invalid credentials", "error", 5);
+                    this.loading = false;
                 });
         }
     },
@@ -102,7 +119,7 @@ export default {
         password: {
             required,
             minLength: minLength(5),
-            maxLength: maxLength(30)
+            maxLength: maxLength(100)
         }
     }
 };

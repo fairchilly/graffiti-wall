@@ -17,7 +17,6 @@ class UserPostResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
             'content' => $this->content,
             'created_at' => $this->created_at,
             'tags' => new TagCollection($this->tags),

@@ -43,21 +43,6 @@ class TagController extends Controller
     }
 
     /**
-     * Creates a new tag.
-     * @param  string  $tag
-     * @return Tag
-     */
-    public function add(string $tag)
-    {
-        // Creates the tag if it doesn't already exists, or return the existing tag
-        $tag = Tag::firstOrCreate(
-            ['value' => $tag]
-        );
-        
-        return $tag;
-    }
-
-    /**
      * Returns a list of posts using a particular tag.
      * @param  string  $tag
      * @return Collection

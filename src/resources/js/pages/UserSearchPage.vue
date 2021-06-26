@@ -3,7 +3,8 @@
         <div
             class="is-flex is-justify-content-space-between is-align-items-flex-end mb-5 mr-5"
         >
-            <div class="is-size-4 mb-2">Recent posts</div>
+            <back-to-graffiti-wall-button />
+            <div class="is-size-5">@{{ username }}</div>
         </div>
 
         <spinner :loading="loading" />
@@ -16,6 +17,7 @@
 export default {
     data: function() {
         return {
+            username: this.$route.params.username,
             posts: [],
             links: null,
             loading: true
@@ -26,7 +28,9 @@ export default {
     },
     methods: {
         loadPosts: async function(url = null) {
-            const urlPath = url ? url : `${process.env.MIX_BASE_URL}/api/posts`;
+            const urlPath = url
+                ? url
+                : `${process.env.MIX_BASE_URL}/api/users/${this.username}/posts`;
 
             await axios
                 .get(urlPath)
@@ -38,7 +42,7 @@ export default {
                 })
                 .catch(error => {
                     alertify.notify(
-                        "Unable to load most recent posts",
+                        `Unable to search posts by @${this.username}`,
                         "error",
                         5
                     );
@@ -48,6 +52,19 @@ export default {
             if (this.links && this.links.next) {
                 await this.loadPosts(this.links.next);
             }
+        },
+        updateUsername: function() {
+            this.username = this.$route.params.username;
+        }
+    },
+    watch: {
+        $route() {
+            this.updateUsername();
+        },
+        username: function(val) {
+            this.posts = [];
+            this.loading = true;
+            this.loadPosts();
         }
     }
 };

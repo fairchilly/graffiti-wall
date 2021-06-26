@@ -35,6 +35,14 @@ class AuthenticationController extends Controller
      */
     public function register(RegisterRequest $request)
     {
+        // Username can't contain anonymous
+        $contains_anonymous = strpos(strtolower($request['username']), 'anonymous');
+        
+        if ($contains_anonymous !== false && $contains_anonymous >= 0) {
+            return response('Username cannot contain the word anonymous', 403);
+        }
+
+
         // Create a new user, with a hashed password
         $user = $this->authentication->register($request);
 

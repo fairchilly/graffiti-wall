@@ -3,7 +3,13 @@
         <spinner :loading="loading" />
 
         <span v-if="!loading">
-            <article class="card has-background-white">
+            <div class="mb-5">
+                <back-to-graffiti-wall-button />
+            </div>
+
+            <article
+                class="card has-background-white ml-5 mr-3 is-shadowless is-radiusless post-no-hover"
+            >
                 <div class="card-content">
                     <div class="content">
                         <div class="columns">
@@ -13,7 +19,16 @@
                                 <div>
                                     <strong>{{ post.user_name }}</strong>
                                     <small class="has-text-grey">
-                                        @{{ post.user_username }}
+                                        <router-link
+                                            :to="{
+                                                name: 'user',
+                                                params: {
+                                                    username: post.user_username
+                                                }
+                                            }"
+                                        >
+                                            @{{ post.user_username }}
+                                        </router-link>
                                     </small>
                                     <br />
                                 </div>
@@ -34,31 +49,39 @@
                         </div>
                         <div class="columns">
                             <div class="column pt-0">
-                                <p v-if="post.tags.length > 0">
-                                    <a
-                                        v-for="tag in post.tags"
-                                        :key="post.id + tag.id"
-                                    >
-                                        <span class="tag is-dark mr-1">
-                                            {{ tag.value }}
-                                        </span>
-                                    </a>
-                                </p>
+                                <tags :id="post.id" :tags="post.tags" />
                             </div>
                         </div>
                     </div>
                 </div>
-            </article>
-            <div class="columns">
-                <div class="column">
+                <header
+                    v-if="canModify"
+                    class="card-header is-shadowless post-header is-flex is-justify-content-center pt-1 pb-1"
+                >
                     <router-link
-                        :to="{ name: 'home' }"
-                        class="button is-link is-light mt-5"
+                        :to="{
+                            name: 'edit-post',
+                            params: {
+                                postId: post.id
+                            }
+                        }"
                     >
-                        Back to the Graffiti Wall
+                        <button class="card-header-icon pl-1 pr-1">
+                            <span class="icon has-text-black">
+                                <i class="fas fa-pencil-alt"></i>
+                            </span>
+                        </button>
                     </router-link>
-                </div>
-            </div>
+                    <button
+                        class="card-header-icon pl-1 pr-1"
+                        @click="deletePost()"
+                    >
+                        <span class="icon has-text-black">
+                            <i class="fas fa-trash-alt"></i>
+                        </span>
+                    </button>
+                </header>
+            </article>
         </span>
     </span>
 </template>
@@ -85,8 +108,44 @@ export default {
                     this.loading = false;
                 })
                 .catch(error => {
-                    console.log(error);
+                    alertify.notify("Unable to load post", "error", 5);
                 });
+        },
+        deletePost: async function() {
+            const headers = {
+                Authorization: `Bearer ${$cookies.get("token")}`
+            };
+
+            const url = `${process.env.MIX_BASE_URL}/api/posts/${this.post.id}`;
+
+            await axios
+                .delete(url, {
+                    headers
+                })
+                .then(response => {
+                    this.$router.push({
+                        name: "home"
+                    });
+                    alertify.notify("Post deleted", "success", 5);
+                })
+                .catch(error => {
+                    console.log(error);
+                    alertify.notify("Unable to delete post", "error", 5);
+                });
+        }
+    },
+    computed: {
+        canModify: function() {
+            let canModify = false;
+
+            const isAuthenticated =
+                $cookies.isKey("token") && $cookies.isKey("user");
+
+            if (isAuthenticated) {
+                canModify = $cookies.get("user").id === this.post.user_id;
+            }
+
+            return canModify;
         }
     }
 };

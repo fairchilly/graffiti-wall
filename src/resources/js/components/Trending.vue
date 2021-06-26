@@ -44,7 +44,7 @@ export default {
                     this.loading = false;
                 })
                 .catch(error => {
-                    console.log(error);
+                    alertify.notify("Unable to load trending tags", "error", 5);
                 });
         }
     }

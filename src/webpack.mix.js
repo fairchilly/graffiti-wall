@@ -18,4 +18,8 @@ mix.js("resources/js/app.js", "public/js")
     .copy(
         "node_modules/alertifyjs/build/alertify.min.js",
         "public/js/alertify.min.js"
+    )
+    .copy(
+        "node_modules/@fortawesome/fontawesome-free/webfonts",
+        "public/webfonts"
     );

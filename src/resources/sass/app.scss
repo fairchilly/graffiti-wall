@@ -1,5 +1,11 @@
-// Fonts
+// Google Fonts
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+
+// Font Awesome
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/brands";
 
 // Libraries
 @import url("~quill/dist/quill.snow.css");
@@ -9,6 +15,7 @@
 // Variables
 @import "variables";
 
+// General
 #logo {
     font-family: "Permanent Marker", cursive;
     font-size: 2em;
@@ -30,6 +37,25 @@
     font-family: "Permanent Marker", cursive;
 }
 
+// Posts
+.post,
+.post-no-hover {
+    background-color: #fff;
+    border: 1px solid #ececec;
+    border-radius: 0px;
+    margin-bottom: -1px;
+}
+
+.post-header {
+    background-color: rgb(241, 241, 241) !important;
+    border-bottom: 1px solid #ececec;
+    border-radius: 0px;
+}
+
+.post:hover {
+    background-color: darken(#fff, 3%) !important;
+}
+
 // Spinner
 .spinner {
     display: inline-block;
@@ -40,6 +66,11 @@
     border-top-color: rgb(80, 80, 80);
     animation: spin 1s ease-in-out infinite;
     -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+.spinner-sm {
+    width: 25px;
+    height: 25px;
 }
 
 @keyframes spin {
