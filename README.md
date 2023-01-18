@@ -16,7 +16,7 @@ Note: Docker & Docker Compose are required for this project.
 
 ### Steps
 
-Run `./setup.sh` from the root of the project, OR run the following steps individually:
+Run `./setup.sh` from the root of the project, or run the following steps individually:
 
 1. In the root of the project, build the containers: `docker-compose up -d`
 
