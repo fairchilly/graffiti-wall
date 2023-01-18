@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 networks:
   laravel:
@@ -27,10 +27,10 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_DATABASE: thinkific_journal
-      MYSQL_USER: thinkific
-      MYSQL_PASSWORD: thinkific
-      MYSQL_ROOT_PASSWORD: thinkific
+      MYSQL_DATABASE: graffiti_wall
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:
@@ -57,7 +57,7 @@ services:
     depends_on:
       - php
     user: laravel
-    entrypoint: ['composer', '--ignore-platform-reqs']
+    entrypoint: ["composer"]
     networks:
       - laravel
 
@@ -70,7 +70,7 @@ services:
       - 3000:3000
       - 3001:3001
     working_dir: /var/www/html
-    entrypoint: ['npm']
+    entrypoint: ["npm"]
     networks:
       - laravel
 
@@ -85,6 +85,6 @@ services:
       - mysql
     working_dir: /var/www/html
     user: laravel
-    entrypoint: ['php', '/var/www/html/artisan']
+    entrypoint: ["php", "/var/www/html/artisan"]
     networks:
       - laravel
